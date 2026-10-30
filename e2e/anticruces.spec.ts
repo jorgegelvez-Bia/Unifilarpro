@@ -12,8 +12,8 @@ const STEP = 250;
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/e2e/harness.html');
-  await page.waitForFunction(() => document.body.dataset.ready === '1');
-  await page.evaluate(() => document.fonts.ready);
+  await page.waitForFunction(() => !!document.body.dataset.ready);
+  expect(await page.evaluate(() => document.body.dataset.ready), 'las fuentes IBM Plex deben cargar').toBe('1');
 });
 
 test('el revisor sí detecta choques', async ({ page }) => {
