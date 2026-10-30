@@ -16,7 +16,7 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 | 2 | Catálogo + modelos (Python), exportación a JSON, botones por grupo y lista de elementos | ✅ |
 | 5 | Reglas (tipo de medida, fusible, revisiones) en Python + copia TS + casos compartidos | ✅ (sin avisos de conexiones/fasorial) |
 | 3 | Motor de dibujo SVG del unifilar (columna, medida al lado, gabinete, celda, irregularidades, leyenda RETIE, rótulo) | ✅ |
-| 4 | Doble circuito, transferencia, ramales | ✅ dibujo · ⏳ prueba anti‑cruces de 1.000 diagramas (Playwright) |
+| 4 | Doble circuito, transferencia, ramales + prueba anti‑cruces (1.000 diagramas al azar, 0 choques, en CI) | ✅ |
 | 6 | Exportar PNG / PDF | ⏳ |
 | 7 | Diagrama de conexiones | ⏳ |
 | 8 | Diagrama fasorial | ⏳ |
@@ -85,6 +85,17 @@ cd backend && pytest --cov=app/rules
 ```bash
 cd frontend && npm test
 ```
+
+Prueba anti-cruces en navegador (la primera vez: `npx playwright install chromium`):
+
+```bash
+cd frontend && npm run test:e2e
+```
+
+Dibuja 1.000 diagramas al azar y revisa que ningún texto, símbolo, línea o caja se monte
+sobre otro. Si algo falla, el mensaje dice el número del diagrama; para verlo, abre
+`http://localhost:5173/e2e/harness.html` con `npm run dev` y escribe en la consola
+`showDiagram(número)`.
 
 GitHub Actions corre todas las pruebas y el build en cada push (`.github/workflows/ci.yml`).
 

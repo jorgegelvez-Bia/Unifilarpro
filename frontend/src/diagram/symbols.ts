@@ -155,10 +155,16 @@ export const SYM: Record<string, SymFn> = {
     return { g, top: y, bottom: y + h, h, cy: yj, noLabel: true, bx: xb + 22, by: yt - 8 };
   },
   transc(y, e, ctx) {
-    const xa = X - 70, xb = X + 70, pd = ctx && ((ctx.prevEl && ctx.prevEl.t === 'doble') || ctx.dual), y0 = pd ? y : y + 42, auto = e.f.tipo === 'Automática', u2 = e.f.enUso === 'Circuito 2';
+    const xa = X - 70, xb = X + 70, pd = ctx && ((ctx.prevEl && ctx.prevEl.t === 'doble') || ctx.dual), auto = e.f.tipo === 'Automática', u2 = e.f.enUso === 'Circuito 2';
+    // Nombres largos en dos renglones (como en el doble circuito) para que no se monten.
+    const n1l = wrap((e.f.nombre1 || '').trim() || '1', 18).slice(0, 2), n2l = wrap((e.f.nombre2 || '').trim() || '2', 18).slice(0, 2);
+    const nl = Math.max(n1l.length, n2l.length), o = pd ? 0 : (nl - 1) * 12, yt = y + 28 + o, y0 = pd ? y : y + 42 + o;
     const xl = X - 24, xr = X + 24, yc = y0 + 34, yb = y0 + 82, h = yb - y + 30;
     let g = '';
-    if (!pd) g += L(xa - 14, y + 28, xa + 14, y + 28, 'bus') + L(xb - 14, y + 28, xb + 14, y + 28, 'bus') + `<text x="${xa}" y="${y + 8}" class="t2" style="text-anchor:middle">Cto.</text><text x="${xb}" y="${y + 8}" class="t2" style="text-anchor:middle">Cto.</text><text x="${xa}" y="${y + 21}" class="t1" style="text-anchor:middle">${esc((e.f.nombre1 || '').trim() || '1')}</text><text x="${xb}" y="${y + 21}" class="t1" style="text-anchor:middle">${esc((e.f.nombre2 || '').trim() || '2')}</text>` + L(xa, y + 28, xa, y0) + L(xb, y + 28, xb, y0);
+    if (!pd) {
+      g += L(xa - 14, yt, xa + 14, yt, 'bus') + L(xb - 14, yt, xb + 14, yt, 'bus') + `<text x="${xa}" y="${y + 8}" class="t2" style="text-anchor:middle">Cto.</text><text x="${xb}" y="${y + 8}" class="t2" style="text-anchor:middle">Cto.</text>` + L(xa, yt, xa, y0) + L(xb, yt, xb, y0);
+      ([[xa, n1l], [xb, n2l]] as [number, string[]][]).forEach(([x, ls]) => ls.forEach((l, i) => (g += `<text x="${x}" y="${y + 21 + i * 12}" class="t1" style="text-anchor:middle">${esc(l)}</text>`)));
+    }
     g += L(xa, y0, xa, y0 + 12) + L(xa, y0 + 12, xl, y0 + 12) + L(xb, y0, xb, y0 + 12) + L(xb, y0 + 12, xr, y0 + 12);
     if (!auto) {
       g += L(xl, y0 + 12, xl, yc) + L(xr, y0 + 12, xr, yc) + L(xl - 8, yc, xl + 8, yc, 'w thick') + L(xr - 8, yc, xr + 8, yc, 'w thick');
