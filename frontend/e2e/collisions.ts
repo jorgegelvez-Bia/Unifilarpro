@@ -42,9 +42,20 @@ export function findCollisions(svg: SVGSVGElement): Collision[] {
   const out: Collision[] = [];
 
   // Textos (sin los números de los triángulos ni los "!" de estado).
+  // El ancho lo da el navegador; la altura se calcula con el tamaño de letra (de lo alto de una
+  // mayúscula a lo bajo de una "p"), porque cada sistema operativo agrega distinto margen
+  // arriba y abajo a la misma fuente y eso daba choques falsos en Linux.
+  const textBox = (el: SVGTextElement): Box => {
+    const b = box(el);
+    const fs = parseFloat(getComputedStyle(el).fontSize) || 10;
+    const p = toSvg(el)(+(el.getAttribute('x') || 0), +(el.getAttribute('y') || 0));
+    const dy = parseFloat(el.getAttribute('dy') || '0');
+    const base = p.y + dy;
+    return { x1: b.x1, x2: b.x2, y1: base - 0.8 * fs, y2: base + 0.2 * fs };
+  };
   const texts = [...svg.querySelectorAll('text')]
     .filter((t) => !t.matches('.trit,.bdgt') && (t.textContent || '').trim())
-    .map((el) => ({ el, b: box(el) }));
+    .map((el) => ({ el, b: textBox(el) }));
 
   // Símbolos: cuerpos sólidos de los equipos.
   const symbols = [...svg.querySelectorAll('rect.s,circle.s,ellipse.s,path.s,circle.w,rect.arr')]
@@ -61,14 +72,14 @@ export function findCollisions(svg: SVGSVGElement): Collision[] {
   for (let i = 0; i < texts.length; i++)
     for (let j = i + 1; j < texts.length; j++) {
       const a = texts[i], b = texts[j];
-      if (hit(shrink(a.b, 1, 2.5), shrink(b.b, 1, 2.5))) out.push({ kind: 'texto/texto', a: desc(a.el, a.b), b: desc(b.el, b.b) });
+      if (hit(shrink(a.b, 1, 0.5), shrink(b.b, 1, 0.5))) out.push({ kind: 'texto/texto', a: desc(a.el, a.b), b: desc(b.el, b.b) });
     }
 
   // 2. Texto sobre símbolo (salvo los rótulos que van dentro, como "kWh" o "0000")
   for (const t of texts)
     for (const s of symbols) {
       if (t.el.matches('.pol,.kwh') && contains(s.b, t.b)) continue;
-      if (hit(shrink(t.b, 1, 2.5), shrink(s.b, 1.5))) out.push({ kind: 'texto/símbolo', a: desc(t.el, t.b), b: desc(s.el, s.b) });
+      if (hit(shrink(t.b, 1, 0.5), shrink(s.b, 1.5))) out.push({ kind: 'texto/símbolo', a: desc(t.el, t.b), b: desc(s.el, s.b) });
     }
 
   // 3. Línea o barra por dentro de un símbolo
@@ -115,7 +126,7 @@ export function findCollisions(svg: SVGSVGElement): Collision[] {
     const b = box(c);
     const edges = [[b.x1, b.y1, b.x2, b.y1], [b.x2, b.y1, b.x2, b.y2], [b.x1, b.y2, b.x2, b.y2], [b.x1, b.y1, b.x1, b.y2]];
     for (const t of texts) {
-      const tb = shrink(t.b, 1, 2.5);
+      const tb = shrink(t.b, 1, 0.5);
       if (edges.some(([x1, y1, x2, y2]) => segHits(x1, y1, x2, y2, tb))) out.push({ kind: 'caja/texto', a: desc(c, b), b: desc(t.el, t.b) });
     }
   }
