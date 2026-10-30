@@ -1,0 +1,1400 @@
+{
+  "types": {
+    "transc": {
+      "name": "Celda de transferencia",
+      "short": "Celda de transferencia",
+      "btn": "Celda de transferencia",
+      "sub": "circuito 1 / 2",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "nombre1",
+          "label": "Nombre del circuito 1",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "nombre2",
+          "label": "Nombre del circuito 2",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "tipo",
+          "label": "Tipo",
+          "kind": "select",
+          "options": [
+            "Sin especificar",
+            "Manual",
+            "Automática"
+          ],
+          "default": "Sin especificar"
+        },
+        {
+          "key": "enUso",
+          "label": "Circuito conectado",
+          "kind": "select",
+          "options": [
+            "Circuito 1",
+            "Circuito 2"
+          ],
+          "default": "Circuito 1"
+        }
+      ]
+    },
+    "doble": {
+      "name": "Doble circuito MT",
+      "short": "Doble circuito",
+      "btn": "Doble circuito",
+      "sub": "MT respaldo",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "nombre1",
+          "label": "Nombre del circuito 1",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "nombre2",
+          "label": "Nombre del circuito 2",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "uso",
+          "label": "Seccionadores",
+          "kind": "select",
+          "options": [
+            "Ambos cerrados",
+            "Cerrado circuito 1",
+            "Cerrado circuito 2"
+          ],
+          "default": "Ambos cerrados"
+        },
+        {
+          "key": "cambio",
+          "label": "Cambio de circuito",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Manual",
+            "Automático"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "red": {
+      "name": "Red",
+      "short": "Red",
+      "btn": "Red",
+      "sub": "MT o BT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "circuito",
+          "label": "Nombre del circuito",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "nivel",
+          "label": "Nivel",
+          "kind": "select",
+          "options": [
+            "MT",
+            "BT"
+          ],
+          "default": "MT"
+        },
+        {
+          "key": "tension",
+          "label": "Tensión",
+          "kind": "text",
+          "default": "13.2 kV"
+        },
+        {
+          "key": "fases",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Trifásico",
+            "Bifásico",
+            "Monofásico"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "neutro",
+          "label": "Neutro",
+          "kind": "select",
+          "options": [
+            "Sí",
+            "No"
+          ],
+          "default": "Sí"
+        }
+      ]
+    },
+    "lmt": {
+      "name": "Líneas MT",
+      "short": "Líneas MT",
+      "btn": "Líneas MT",
+      "sub": "red aérea",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "lineas",
+          "label": "Número de líneas",
+          "kind": "select",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "default": "1"
+        }
+      ]
+    },
+    "cajam": {
+      "name": "Caja de maniobras MT",
+      "short": "Caja de maniobras MT",
+      "btn": "Caja de maniobras MT",
+      "sub": "derivación MT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "tension",
+          "label": "Nivel de tensión",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "tipo",
+          "label": "Tipo",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Barraje premoldeado",
+            "Celda de maniobra (RMU)"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "clientes",
+          "label": "Otros clientes conectados",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "rabi": {
+      "name": "Red abierta",
+      "short": "Red abierta",
+      "btn": "Red abierta",
+      "sub": "conductor desnudo BT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "sistema",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Trifásica",
+            "Bifásica",
+            "Monofásica"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "calibre",
+          "label": "Calibre",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "6 AWG",
+            "4 AWG",
+            "2 AWG",
+            "1/0 AWG",
+            "2/0 AWG",
+            "3/0 AWG",
+            "4/0 AWG"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "material",
+          "label": "¿Cobre o aluminio?",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Aluminio",
+            "Cobre"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "rtren": {
+      "name": "Red trenzada",
+      "short": "Red trenzada",
+      "btn": "Red trenzada",
+      "sub": "cable trenzado BT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "sistema",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Trifásica",
+            "Bifásica",
+            "Monofásica"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "calibre",
+          "label": "Calibre",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "6 AWG",
+            "4 AWG",
+            "2 AWG",
+            "1/0 AWG",
+            "2/0 AWG",
+            "3/0 AWG",
+            "4/0 AWG"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "material",
+          "label": "¿Cobre o aluminio?",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Aluminio",
+            "Cobre"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "cajab": {
+      "name": "Caja de abonados",
+      "short": "Caja de abonados",
+      "btn": "Caja de abonados",
+      "sub": "derivación BT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "material",
+          "label": "Material",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Metálica",
+            "Policarbonato"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "abonados",
+          "label": "Otros abonados que salen de la caja",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "acom": {
+      "name": "Acometida",
+      "short": "Acometida",
+      "btn": "Acometida",
+      "sub": "conductores",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "fasesA",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Igual a la red",
+            "Trifásica",
+            "Bifásica",
+            "Monofásica"
+          ],
+          "default": "Igual a la red"
+        },
+        {
+          "key": "tipo",
+          "label": "¿Subterránea o aérea?",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Aérea",
+            "Subterránea"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "neutro",
+          "label": "¿Lleva neutro?",
+          "kind": "select",
+          "options": [
+            "Sí",
+            "No"
+          ],
+          "default": "Sí"
+        },
+        {
+          "key": "calibre",
+          "label": "Calibre de la acometida",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "8 AWG",
+            "6 AWG",
+            "4 AWG",
+            "2 AWG",
+            "1/0 AWG",
+            "2/0 AWG",
+            "3/0 AWG",
+            "4/0 AWG",
+            "250 kcmil",
+            "350 kcmil",
+            "500 kcmil"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "porFase",
+          "label": "Número de cables por fase",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "material",
+          "label": "¿Cobre o aluminio?",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Cobre",
+            "Aluminio"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "xlpe": {
+      "name": "Cable XLPE",
+      "short": "XLPE",
+      "btn": "XLPE",
+      "sub": "cable aislado",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "subterraneo",
+          "label": "¿Subterráneo?",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Sí",
+            "No"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "calibre",
+          "label": "Calibre",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "2 AWG",
+            "1/0 AWG",
+            "2/0 AWG",
+            "4/0 AWG",
+            "250 kcmil",
+            "350 kcmil",
+            "500 kcmil"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "fus": {
+      "name": "Cortacircuitos",
+      "short": "Cortacircuitos",
+      "btn": "Cortacirc.",
+      "sub": "fusibles",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "criterio",
+          "label": "Fusible",
+          "kind": "select",
+          "options": [
+            "Automático según trafo",
+            "Manual"
+          ],
+          "default": "Automático según trafo"
+        },
+        {
+          "key": "corriente",
+          "label": "Capacidad del fusible",
+          "kind": "text",
+          "default": "10 A"
+        },
+        {
+          "key": "cantidad",
+          "label": "Cantidad",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "1",
+            "2",
+            "3"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "secc": {
+      "name": "Seccionador",
+      "short": "Seccionador",
+      "btn": "Seccionador",
+      "sub": "cuchillas",
+      "noCommon": false,
+      "fields": []
+    },
+    "seccp": {
+      "name": "Seccionador principal",
+      "short": "Seccionador principal",
+      "btn": "Secc. principal",
+      "sub": "cuchillas",
+      "noCommon": false,
+      "fields": []
+    },
+    "reco": {
+      "name": "Reconectador",
+      "short": "Reconectador",
+      "btn": "Reconectador",
+      "sub": "automático",
+      "noCommon": false,
+      "fields": []
+    },
+    "dps": {
+      "name": "DPS",
+      "short": "DPS",
+      "btn": "DPS",
+      "sub": "pararrayos",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "buenos",
+          "label": "En buen estado",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "3",
+            "2",
+            "1",
+            "0"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "malos",
+          "label": "Dañados",
+          "kind": "select",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "default": "0"
+        }
+      ]
+    },
+    "spt": {
+      "name": "Puesta a tierra",
+      "short": "Puesta a tierra",
+      "btn": "Tierra",
+      "sub": "SPT",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "para",
+          "label": "¿Para qué es?",
+          "kind": "select",
+          "options": [
+            "DPS",
+            "Transformador de potencia",
+            "Gabinete de medidor",
+            "Celda de medida"
+          ],
+          "default": "DPS"
+        }
+      ]
+    },
+    "celda": {
+      "name": "Celda de medida",
+      "short": "Celda de medida",
+      "btn": "Celda",
+      "sub": "encierra equipos",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "encierra",
+          "label": "Encierra (elementos siguientes)",
+          "kind": "text",
+          "default": "2"
+        },
+        {
+          "key": "nivel",
+          "label": "Nivel",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "MT",
+            "BT"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "tipo",
+          "label": "Tipo",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Metálica",
+            "Policarbonato"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "tt": {
+      "name": "TT",
+      "short": "TT",
+      "btn": "TT",
+      "sub": "de tensión",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "cantidad",
+          "label": "Cantidad de TT",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "1",
+            "2",
+            "3"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "relacion",
+          "label": "Relación",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "tc": {
+      "name": "TC",
+      "short": "TC",
+      "btn": "TC",
+      "sub": "de corriente",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "cantidad",
+          "label": "Cantidad de TC",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "1",
+            "2",
+            "3"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "relacion",
+          "label": "Relación",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "bloque": {
+      "name": "Bloque de pruebas principal",
+      "short": "Bloque de pruebas principal",
+      "btn": "Bloque principal",
+      "sub": "bornera",
+      "noCommon": false,
+      "fields": []
+    },
+    "bloquer": {
+      "name": "Bloque de pruebas respaldo",
+      "short": "Bloque de pruebas respaldo",
+      "btn": "Bloque respaldo",
+      "sub": "bornera",
+      "noCommon": false,
+      "fields": []
+    },
+    "fasor": {
+      "name": "Diagrama fasorial",
+      "short": "Fasorial",
+      "btn": "Diagrama fasorial",
+      "sub": "V, I y ángulo",
+      "noCommon": true,
+      "fields": []
+    },
+    "conex": {
+      "name": "Diagrama de conexiones",
+      "short": "Conexiones",
+      "btn": "Diagrama de conexiones",
+      "sub": "cableado bornes",
+      "noCommon": true,
+      "fields": []
+    },
+    "irreg": {
+      "name": "Irregularidad",
+      "short": "Irregularidad",
+      "btn": "Irregularidad",
+      "sub": "puente, manipulación",
+      "noCommon": true,
+      "fields": [
+        {
+          "key": "tipo",
+          "label": "Tipo de irregularidad",
+          "kind": "select",
+          "options": [
+            "Línea directa antes de los TC",
+            "Conexión directa antes de la medida",
+            "Línea directa antes del medidor",
+            "Puente que salta el medidor",
+            "Puente que salta los TC",
+            "Acometida derivada antes del medidor",
+            "Fase sin pasar por la medida",
+            "TC puenteado o en cortocircuito",
+            "TT desconectado o fusible abierto",
+            "Polaridad invertida en TC",
+            "Sellos violados o faltantes",
+            "Medidor manipulado",
+            "Bornera del medidor abierta",
+            "Bloque de pruebas puenteado",
+            "Otra"
+          ],
+          "default": "Línea directa antes de los TC"
+        },
+        {
+          "key": "desde",
+          "label": "Desde (dónde empieza)",
+          "kind": "ref",
+          "default": ""
+        },
+        {
+          "key": "hasta",
+          "label": "Hasta (dónde termina)",
+          "kind": "ref",
+          "default": ""
+        },
+        {
+          "key": "en",
+          "label": "¿En qué elemento?",
+          "kind": "ref",
+          "default": ""
+        },
+        {
+          "key": "fase",
+          "label": "Fase(s) afectada(s)",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "R",
+            "S",
+            "T",
+            "R y S",
+            "R y T",
+            "S y T",
+            "Todas (R, S y T)",
+            "Neutro",
+            "No aplica"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "detalle",
+          "label": "Detalle",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "gabinete": {
+      "name": "Gabinete de medida",
+      "short": "Gabinete",
+      "btn": "Gabinete",
+      "sub": "medidor y bloque",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "material",
+          "label": "Material",
+          "kind": "select",
+          "options": [
+            "Sin especificar",
+            "Metálico",
+            "Policarbonato"
+          ],
+          "default": "Sin especificar"
+        },
+        {
+          "key": "ubic",
+          "label": "Ubicación",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Poste",
+            "Subestación"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "uso",
+          "label": "Uso",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Exclusivo",
+            "Compartido"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "otrosCant",
+          "label": "Medidores de otros usuarios",
+          "kind": "text",
+          "default": "3"
+        }
+      ]
+    },
+    "subm": {
+      "name": "Medida aguas abajo",
+      "short": "Medida aguas abajo",
+      "btn": "Medida",
+      "sub": "directa, semi o indirecta",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "tipo",
+          "label": "Tipo de medida aguas abajo",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Directa",
+            "Semidirecta",
+            "Indirecta"
+          ],
+          "default": "Sin indicar"
+        }
+      ],
+      "mk": [
+        "aguas abajo",
+        "d"
+      ]
+    },
+    "mdir": {
+      "name": "Medidor de medida directa",
+      "short": "Medidor medida directa",
+      "btn": "Medidor",
+      "sub": "aguas abajo",
+      "noCommon": false,
+      "fields": [],
+      "mk": [
+        "medida directa",
+        "d"
+      ]
+    },
+    "medidor": {
+      "name": "Medidor principal",
+      "short": "Medidor",
+      "btn": "Medidor",
+      "sub": "kWh",
+      "noCommon": false,
+      "fields": [],
+      "mk": [
+        "principal",
+        "p"
+      ]
+    },
+    "respaldo": {
+      "name": "Medidor de respaldo",
+      "short": "Medidor respaldo",
+      "btn": "Medidor",
+      "sub": "kWh",
+      "noCommon": false,
+      "fields": [],
+      "mk": [
+        "respaldo",
+        "r"
+      ]
+    },
+    "testigo": {
+      "name": "Medidor testigo",
+      "short": "Medidor testigo",
+      "btn": "Medidor",
+      "sub": "kWh",
+      "noCommon": false,
+      "fields": [],
+      "mk": [
+        "testigo",
+        "t"
+      ]
+    },
+    "trafo": {
+      "name": "Transformador",
+      "short": "Transformador",
+      "btn": "Trafo",
+      "sub": "potencia",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "cantidad",
+          "label": "¿Cuántos transformadores?",
+          "kind": "text",
+          "default": "1"
+        },
+        {
+          "key": "configuracion",
+          "label": "¿Cómo están?",
+          "kind": "select",
+          "options": [
+            "Independientes",
+            "Banco de monofásicos"
+          ],
+          "default": "Independientes"
+        },
+        {
+          "key": "potencia",
+          "label": "kVA",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "relacion",
+          "label": "Tensiones",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "otros": {
+      "name": "Otros usuarios",
+      "short": "Otros usuarios",
+      "btn": "Otros usuarios",
+      "sub": "flecha a otros",
+      "noCommon": true,
+      "fields": [
+        {
+          "key": "descripcion",
+          "label": "Tipo de usuarios",
+          "kind": "select",
+          "options": [
+            "Sin especificar",
+            "Residencial",
+            "Comercial",
+            "Industrial"
+          ],
+          "default": "Sin especificar"
+        }
+      ]
+    },
+    "brkcli": {
+      "name": "Breaker cliente",
+      "short": "Breaker cliente",
+      "btn": "Breaker cliente",
+      "sub": "interruptor",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "corriente",
+          "label": "Capacidad (A)",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "polos",
+          "label": "Polos",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "barrmt": {
+      "name": "Barraje de distribución MT",
+      "short": "Barraje de distribución MT",
+      "btn": "Barraje MT",
+      "sub": "distribución",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "sistema",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "Trifásico",
+            "Bifásico",
+            "Monofásico"
+          ],
+          "default": "Sin indicar"
+        },
+        {
+          "key": "salidas",
+          "label": "Otras salidas (circuitos)",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "barraje": {
+      "name": "Barraje principal",
+      "short": "Barraje principal",
+      "btn": "Barraje BT",
+      "sub": "principal",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "sistema",
+          "label": "Sistema",
+          "kind": "select",
+          "options": [
+            "Trifásico",
+            "Bifásico",
+            "Monofásico"
+          ],
+          "default": "Trifásico"
+        }
+      ]
+    },
+    "breaker": {
+      "name": "Totalizador",
+      "short": "Breaker Tot.",
+      "btn": "Breaker totalizador",
+      "sub": "interruptor",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "cantidad",
+          "label": "¿Cuántos totalizadores?",
+          "kind": "text",
+          "default": "1"
+        },
+        {
+          "key": "corriente",
+          "label": "Capacidad (A)",
+          "kind": "text",
+          "default": ""
+        },
+        {
+          "key": "polos",
+          "label": "Polos",
+          "kind": "select",
+          "options": [
+            "Sin indicar",
+            "3",
+            "2",
+            "1"
+          ],
+          "default": "Sin indicar"
+        }
+      ]
+    },
+    "transfer": {
+      "name": "Transferencia",
+      "short": "Transferencia",
+      "btn": "Transferencia",
+      "sub": "red / planta",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "tipo",
+          "label": "Tipo",
+          "kind": "select",
+          "options": [
+            "Automática",
+            "Manual"
+          ],
+          "default": "Automática"
+        },
+        {
+          "key": "corriente",
+          "label": "Corriente",
+          "kind": "text",
+          "default": "200 A"
+        }
+      ]
+    },
+    "planta": {
+      "name": "Planta de emergencia",
+      "short": "Planta",
+      "btn": "Planta",
+      "sub": "generador",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "potencia",
+          "label": "Potencia",
+          "kind": "text",
+          "default": "100 kVA"
+        },
+        {
+          "key": "marca",
+          "label": "Marca",
+          "kind": "text",
+          "default": ""
+        }
+      ]
+    },
+    "cond": {
+      "name": "Banco de condensadores",
+      "short": "Condensadores",
+      "btn": "Condensador",
+      "sub": "kVAr",
+      "noCommon": false,
+      "fields": [
+        {
+          "key": "potencia",
+          "label": "Potencia",
+          "kind": "text",
+          "default": "50 kVAr"
+        },
+        {
+          "key": "pasos",
+          "label": "Pasos",
+          "kind": "text",
+          "default": "5"
+        }
+      ]
+    },
+    "carga": {
+      "name": "Carga",
+      "short": "Carga",
+      "btn": "Carga",
+      "sub": "tipo de usuario",
+      "noCommon": true,
+      "fields": [
+        {
+          "key": "descripcion",
+          "label": "Tipo de usuario",
+          "kind": "select",
+          "options": [
+            "Sin especificar",
+            "Residencial",
+            "Comercial",
+            "Industrial"
+          ],
+          "default": "Sin especificar"
+        }
+      ]
+    }
+  },
+  "common": [
+    {
+      "key": "estado",
+      "label": "Estado",
+      "kind": "select",
+      "options": [
+        "Bueno",
+        "Dañado",
+        "Por revisar"
+      ],
+      "default": "Bueno"
+    },
+    {
+      "key": "obs",
+      "label": "Observación del estado",
+      "kind": "text",
+      "default": ""
+    }
+  ],
+  "groups": [
+    {
+      "key": "g0",
+      "name": "Red MT",
+      "items": [
+        "red",
+        "doble",
+        "transc",
+        "lmt",
+        "barrmt",
+        "cajam",
+        "xlpe",
+        "reco"
+      ],
+      "color": "#7B1FA2",
+      "colorDark": "#C58AE0"
+    },
+    {
+      "key": "g1",
+      "name": "Protección MT",
+      "items": [
+        "fus",
+        "secc",
+        "seccp",
+        "dps",
+        "spt"
+      ],
+      "color": "#C25E00",
+      "colorDark": "#F5A04A"
+    },
+    {
+      "key": "g2",
+      "name": "Transformación",
+      "items": [
+        "trafo",
+        "otros"
+      ],
+      "color": "#1F6FD1",
+      "colorDark": "#6FA8F5"
+    },
+    {
+      "key": "g3",
+      "name": "Red BT y acometida",
+      "items": [
+        "rtren",
+        "rabi",
+        "cajab",
+        "acom",
+        "barraje"
+      ],
+      "color": "#A87400",
+      "colorDark": "#E8C04A"
+    },
+    {
+      "key": "g4",
+      "name": "Medida",
+      "items": [
+        "celda",
+        "tt",
+        "tc",
+        "bloque",
+        "bloquer",
+        "medidor",
+        "respaldo",
+        "testigo",
+        "mdir",
+        "gabinete"
+      ],
+      "color": "#2E8B3A",
+      "colorDark": "#6FCF7F"
+    },
+    {
+      "key": "g5",
+      "name": "Cargas y otros",
+      "items": [
+        "breaker",
+        "brkcli",
+        "transfer",
+        "planta",
+        "cond",
+        "carga"
+      ],
+      "color": "#C2185B",
+      "colorDark": "#F06292"
+    },
+    {
+      "key": "g6",
+      "name": "Irregularidad",
+      "items": [
+        "irreg"
+      ],
+      "color": "#C62828",
+      "colorDark": "#F28B82"
+    },
+    {
+      "key": "g7",
+      "name": "Diagramas",
+      "items": [
+        "conex",
+        "fasor"
+      ],
+      "color": "#00796B",
+      "colorDark": "#4DB6AC"
+    }
+  ],
+  "medidaRamal": [
+    "Sin indicar",
+    "Directa",
+    "Semidirecta",
+    "Indirecta",
+    "Solo carga"
+  ],
+  "templates": {
+    "vacio": [],
+    "directa": [
+      {
+        "t": "red",
+        "over": {
+          "nivel": "BT",
+          "tension": "220/127 V"
+        }
+      },
+      {
+        "t": "medidor",
+        "over": {
+          "clase": "1",
+          "energia": "Activa"
+        }
+      },
+      {
+        "t": "breaker",
+        "over": {}
+      },
+      {
+        "t": "carga",
+        "over": {}
+      }
+    ],
+    "semidirecta": [
+      {
+        "t": "red",
+        "over": {
+          "nivel": "BT",
+          "tension": "220/127 V"
+        }
+      },
+      {
+        "t": "tc",
+        "over": {}
+      },
+      {
+        "t": "bloque",
+        "over": {}
+      },
+      {
+        "t": "medidor",
+        "over": {}
+      },
+      {
+        "t": "breaker",
+        "over": {}
+      },
+      {
+        "t": "carga",
+        "over": {}
+      }
+    ],
+    "indirecta": [
+      {
+        "t": "red",
+        "over": {}
+      },
+      {
+        "t": "fus",
+        "over": {}
+      },
+      {
+        "t": "dps",
+        "over": {}
+      },
+      {
+        "t": "celda",
+        "over": {}
+      },
+      {
+        "t": "tt",
+        "over": {}
+      },
+      {
+        "t": "tc",
+        "over": {}
+      },
+      {
+        "t": "bloque",
+        "over": {}
+      },
+      {
+        "t": "medidor",
+        "over": {
+          "marca": "Ejemplo",
+          "serial": "000000"
+        }
+      },
+      {
+        "t": "trafo",
+        "over": {}
+      },
+      {
+        "t": "breaker",
+        "over": {}
+      },
+      {
+        "t": "carga",
+        "over": {}
+      }
+    ],
+    "distribucion": [
+      {
+        "t": "red",
+        "over": {}
+      },
+      {
+        "t": "fus",
+        "over": {}
+      },
+      {
+        "t": "dps",
+        "over": {}
+      },
+      {
+        "t": "trafo",
+        "over": {}
+      },
+      {
+        "t": "otros",
+        "over": {}
+      },
+      {
+        "t": "breaker",
+        "over": {}
+      },
+      {
+        "t": "carga",
+        "over": {}
+      }
+    ]
+  }
+}
