@@ -1,5 +1,6 @@
 /** Página de prueba: dibuja diagramas al azar y busca choques. La usa anticruces.spec.ts. */
 import { buildSVG, LIGHT } from '@/diagram/engine';
+import { fontsReady } from '@/fonts';
 import { findCollisions, type Collision } from './collisions';
 import { randomDiagram } from './randomDiagrams';
 
@@ -24,4 +25,5 @@ function show(i: number, seed?: number) {
 }
 
 Object.assign(window, { runAntiCruces: run, showDiagram: show });
-document.body.dataset.ready = '1';
+// Solo se prueba con las fuentes reales cargadas (si no, la prueba no vale).
+fontsReady().then((ok) => { document.body.dataset.ready = ok ? '1' : 'sin-fuentes'; });
