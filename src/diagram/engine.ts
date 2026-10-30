@@ -344,14 +344,14 @@ function bodySVG(els: El[], o: BodyOpts = {}): BodyResult {
   if (gab && !side && gi) {
     const sh = gab.f.uso === 'Compartido', y0 = gi.y0 + 6;
     let y1 = gi.y1! - 6;
-    const gp = gabParts(gab), gl = [gp.slice(0, -1).join(' '), gp[gp.length - 1]], tw = Math.max(...gl.map((t) => t.length)) * 6.8, n = parseInt(gab.f.otrosCant) || 0, ot = 'Otros usuarios' + (n ? ' ×' + n : '');
+    const gp = gabParts(gab), gl = [gp.slice(0, -1).join(' '), gp[gp.length - 1]], tw = Math.max(...gl.map((t) => t.length)) * 7.2, n = parseInt(gab.f.otrosCant) || 0, ot = 'Otros usuarios' + (n ? ' ×' + n : '');
     // Lo que quede dentro del gabinete (por ejemplo flechas de abonados) no puede salirse por el borde,
     // y el rótulo va a la derecha de los textos de irregularidades.
     const inside = inlineBoxes.filter((b) => b.bot > y0 && b.top < y1).map((b) => b.right + 8);
     const ib = irrBoxes.filter((b) => b.bot > y0 && b.top < y1);
     y1 = Math.max(y1, ...ib.map((b) => b.bot + 4));
     const lx = Math.round(Math.max(X + 30, ...ib.map((b) => b.right + 10)));
-    const gx1 = Math.round(Math.max(lx + tw + 12, sh ? lx + 32 + 18 + ot.length * 6 + 12 : 0, ...inside, ...ib.map((b) => b.right + 8)));
+    const gx1 = Math.round(Math.max(lx + tw + 12, sh ? lx + 32 + 18 + textW(ot) + 14 : 0, ...inside, ...ib.map((b) => b.right + 8)));
     maxRight = Math.max(maxRight, gx1);
     parts.push(`<rect x="${X - 34}" y="${y0}" width="${gx1 - X + 34}" height="${y1 - y0}" class="cel ${stClass(gab)}"/>` + gl.map((t, i) => `<text x="${lx}" y="${y0 + 13 + i * 12}" class="t4 lft nm">${esc(t)}</text>`).join('') + badge(gx1, y0, gab));
     if (sh) { const gy = y0 + 13 + gl.length * 12 + 9; parts.push(`<circle cx="${lx + 32}" cy="${gy}" r="11" class="w ghost"/><text x="${lx + 32}" y="${gy + 3}" class="pol" style="text-anchor:middle">kWh</text><text x="${lx + 50}" y="${gy + 4}" class="t2 lft">${esc(ot)}</text>`); }
@@ -479,7 +479,7 @@ function bodySVG(els: El[], o: BodyOpts = {}): BodyResult {
       const sh = gab.f.uso === 'Compartido', gx0 = bl ? Math.round(Math.min(bx - 58, bx + 12 - blHalf - 8)) : 440;
       const irrM = irrs.some((ir) => { const t = irrTarget(ir.f); const P = !t.branch && pos[t.id]; return P && P.meter; });
       const gp = gabParts(gab), head = gp.slice(0, -1).join(' ');
-      const gx1 = irrM ? W - 10 : Math.round(Math.max(mx + 66, meterRight + 8, gx0 + 8 + head.length * 6.8 + 12, sh ? gx0 + 40 + ('Medidores otros usuarios ×' + (parseInt(gab.f.otrosCant) || 0)).length * 6 + 10 : 0));
+      const gx1 = irrM ? W - 10 : Math.round(Math.max(mx + 66, meterRight + 8, gx0 + 8 + head.length * 7.2 + 12, sh ? gx0 + 40 + textW('Medidores otros usuarios ×' + (parseInt(gab.f.otrosCant) || 0)) + 14 : 0));
       const gy0 = top - 38, gy1 = bot + (sh ? 36 : 10);
       parts.push(`<rect x="${gx0}" y="${gy0}" width="${gx1 - gx0}" height="${gy1 - gy0}" class="cel ${stClass(gab)}"/><text x="${gx0 + 8}" y="${gy0 + 14}" class="t4 lft nm">${esc(head)}</text><text x="${gx0 + 8}" y="${gy0 + 26}" class="t4 lft nm">${esc(gp[gp.length - 1])}</text>` + badge(gx1, gy0, gab));
       if (sh) parts.push(ghost(gx0 + 22, gy1 - 18, gab));
