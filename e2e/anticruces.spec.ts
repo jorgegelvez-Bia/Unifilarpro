@@ -9,6 +9,8 @@ import { expect, test } from '@playwright/test';
 
 const TOTAL = Number(process.env.ANTICRUCES_N || 1000);
 const STEP = 250;
+/** Otra semilla = otros 1.000 diagramas (ANTICRUCES_SEED=1 npm run test:e2e). */
+const SEED = process.env.ANTICRUCES_SEED ? Number(process.env.ANTICRUCES_SEED) : undefined;
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/e2e/harness.html');
@@ -37,7 +39,7 @@ test(`${TOTAL} diagramas al azar sin choques`, async ({ page }) => {
   test.setTimeout(10 * 60_000);
   const fails: unknown[] = [];
   for (let i = 0; i < TOTAL; i += STEP) {
-    const f = await page.evaluate(([a, b]) => (window as any).runAntiCruces(a, b), [i, Math.min(TOTAL, i + STEP)]);
+    const f = await page.evaluate(([a, b, s]) => (window as any).runAntiCruces(a, b, s), [i, Math.min(TOTAL, i + STEP), SEED] as const);
     fails.push(...f);
   }
   // Si falla, el mensaje dice qué diagrama (número i) y qué se montó con qué.
