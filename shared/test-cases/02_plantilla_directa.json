@@ -1,0 +1,19 @@
+{
+  "name": "Plantilla directa",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "BT", "tension": "220/127 V" } },
+      { "id": "b", "t": "medidor", "f": {} },
+      { "id": "c", "t": "breaker", "f": {} },
+      { "id": "d", "t": "carga", "f": {} }
+    ]
+  },
+  "expect": {
+    "meterType": "Directa",
+    "fuse": null,
+    "checks": [
+      { "level": "ok", "text": "Sin observaciones. El diagrama tiene los elementos básicos para el tipo de medida." }
+    ],
+    "summaries": { "a": "BT · 220/127 V", "b": "", "c": "", "d": "" }
+  }
+}

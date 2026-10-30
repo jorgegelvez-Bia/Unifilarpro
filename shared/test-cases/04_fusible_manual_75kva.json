@@ -1,0 +1,19 @@
+{
+  "name": "Fusible manual fuera de rango, trafo 75 kVA trifásico a 13.2 kV",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "tension": "13.2 kV", "fases": "Trifásico" } },
+      { "id": "b", "t": "fus", "f": { "criterio": "Manual", "corriente": "10 A", "cantidad": "3" } },
+      { "id": "c", "t": "trafo", "f": { "potencia": "75", "relacion": "13.2 kV / 220-127 V" } },
+      { "id": "d", "t": "medidor", "f": {} }
+    ]
+  },
+  "expect": {
+    "meterType": "Directa",
+    "fuse": { "amp": 5, "In": 3.2804, "text": "5 A tipo K", "src": "tabla CENS 13.2 kV", "mono": false, "unit": 75, "kv": 13.2, "ti": 2 },
+    "checks": [
+      { "level": "warn", "text": "Cortacircuitos: fusible de 10 A y para 75 kVA se sugiere 5 A tipo K (tabla CENS 13.2 kV)." }
+    ],
+    "summaries": { "a": "MT · 13.2 kV · Trifásico", "b": "Fusible 10 A · ×3", "c": "75 kVA · 13.2 kV / 220-127 V" }
+  }
+}

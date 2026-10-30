@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colores iguales al HTML actual. Modo oscuro según el sistema. */
+:root {
+  --paper: #EEF2F1; --panel: #FFFFFF; --ink: #17262B; --muted: #5B6C70; --line: #D3DCDA;
+  --accent: #0A7C74; --volt: #B4530F; --nm: #0D2F6B; --bad: #C62828; --sheet: #FFFFFF;
+  --warn-bg: #FFF4E8; --ok-bg: #E6F4F1; --bad-bg: #FDECEC;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1416; --panel: #162024; --ink: #E2ECEA; --muted: #92A4A6; --line: #2A383C;
+    --accent: #3CC2B6; --volt: #EC9550; --nm: #8DB8FF; --bad: #FF6B6B; --sheet: #121A1D;
+    --warn-bg: #2E2114; --ok-bg: #12292A; --bad-bg: #341A1A;
+    color-scheme: dark;
+  }
+}
+
+body { background: var(--paper); color: var(--ink); font-size: 15px; }
+
+@layer components {
+  .panel { @apply bg-panel border border-line rounded-[10px] p-3.5 flex flex-col gap-3; }
+  .lbl { @apply text-[11px] tracking-[.08em] uppercase text-muted font-semibold; }
+  .btn { @apply inline-flex items-center gap-1 rounded-[7px] border border-line bg-paper px-2.5 py-1.5 text-ink cursor-pointer disabled:opacity-40 disabled:cursor-default; }
+  .btn-pri { @apply btn bg-accent border-accent text-white font-semibold; }
+  .field { @apply flex flex-col gap-1 text-sm; }
+  .field label { @apply text-xs text-muted; }
+  .field input, .field select { @apply rounded-[7px] border border-line bg-panel px-2 py-2 text-ink text-[15px]; }
+}

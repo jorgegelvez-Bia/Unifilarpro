@@ -1,0 +1,26 @@
+{
+  "name": "Banco de 4 monofásicos, TT sin TC y totalizador mayor que el TC",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "fases": "Trifásico" } },
+      { "id": "b", "t": "trafo", "f": { "cantidad": "4", "configuracion": "Banco de monofásicos", "potencia": "25", "potencia2": "25", "potencia3": "25", "potencia4": "25" } },
+      { "id": "c", "t": "tt", "f": {} },
+      { "id": "d", "t": "gabinete", "f": {} },
+      { "id": "e", "t": "breaker", "f": { "corriente": "400 A" } },
+      { "id": "f", "t": "tc", "f": { "relacion": "300/5" } },
+      { "id": "g", "t": "irreg", "f": { "tipo": "Otra", "detalle": "Cable extra en la bornera", "fase": "Todas (R, S y T)" } }
+    ]
+  },
+  "expect": {
+    "meterType": "Indirecta",
+    "fuse": { "amp": 3, "In": 1.8939, "text": "3 A tipo K", "src": "tabla CENS 13.2 kV", "mono": true, "unit": 25, "kv": 13.2, "ti": 1 },
+    "checks": [
+      { "level": "bad", "text": "Irregularidad 1: Cable extra en la bornera · fases R, S y T." },
+      { "level": "warn", "text": "No hay bloque de pruebas entre los transformadores de medida y el medidor. Revísalo con el Código de Medida (CREG 038 de 2014)." },
+      { "level": "warn", "text": "Transformador: un banco para sistema trifásico suele ser de 3 monofásicos (o 2 en delta abierta) y tienes 4." },
+      { "level": "warn", "text": "Hay gabinete de medida pero no hay medidor ni bloque de pruebas." },
+      { "level": "warn", "text": "El totalizador (400 A) supera en más de 20% la corriente primaria del TC (300 A)." }
+    ],
+    "summaries": { "b": "4 trafos banco de monofásicos · T1: 25 kVA, T2: 25 kVA, T3: 25 kVA, T4: 25 kVA (total 100 kVA)" }
+  }
+}

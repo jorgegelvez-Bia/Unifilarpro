@@ -1,0 +1,5 @@
+{
+  "name": "Diagrama vacío",
+  "diagram": { "els": [] },
+  "expect": { "meterType": "Directa", "fuse": null, "checks": [] }
+}

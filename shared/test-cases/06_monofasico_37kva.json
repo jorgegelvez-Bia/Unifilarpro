@@ -1,0 +1,18 @@
+{
+  "name": "Trafo monofásico 37.5 kVA (tabla CENS monofásica)",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "tension": "13,2 kV", "fases": "Monofásico" } },
+      { "id": "b", "t": "fus", "f": { "criterio": "Manual", "corriente": "4 A" } },
+      { "id": "c", "t": "trafo", "f": { "potencia": "37,5" } },
+      { "id": "d", "t": "medidor", "f": {} }
+    ]
+  },
+  "expect": {
+    "meterType": "Directa",
+    "fuse": { "amp": 4, "In": 2.8409, "text": "4 A tipo K", "src": "tabla CENS 13.2 kV", "mono": true, "unit": 37.5, "kv": 13.2, "ti": 2 },
+    "checks": [
+      { "level": "ok", "text": "Sin observaciones. El diagrama tiene los elementos básicos para el tipo de medida." }
+    ]
+  }
+}

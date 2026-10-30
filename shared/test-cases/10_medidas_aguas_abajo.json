@@ -1,0 +1,25 @@
+{
+  "name": "Semidirecta con medidor directo aguas abajo y bloque de respaldo suelto",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "BT", "tension": "220/127 V", "fases": "Trifásico", "neutro": "Sí" } },
+      { "id": "b", "t": "tc", "f": { "cantidad": "3", "relacion": "200/5 A" } },
+      { "id": "c", "t": "bloquer", "f": {} },
+      { "id": "d", "t": "medidor", "f": {} },
+      { "id": "e", "t": "breaker", "f": { "corriente": "300 A", "polos": "3" } },
+      { "id": "f", "t": "mdir", "f": {} },
+      { "id": "g", "t": "planta", "f": {} },
+      { "id": "h", "t": "gabinete", "f": { "uso": "Compartido", "otrosCant": "4" } }
+    ]
+  },
+  "expect": {
+    "meterType": "Semidirecta + directa",
+    "fuse": null,
+    "checks": [
+      { "level": "warn", "text": "Hay bloque de pruebas de respaldo sin el bloque de pruebas principal." },
+      { "level": "warn", "text": "Hay bloque de pruebas de respaldo pero no hay medidor de respaldo." },
+      { "level": "warn", "text": "Hay planta de emergencia sin transferencia." }
+    ],
+    "summaries": { "a": "BT · 220/127 V · Trifásico + N", "e": "300 A · 3P", "g": "100 kVA", "h": "Compartido · 4 medidores de otros usuarios" }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Dos trafos independientes con medida distinta",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "tension": "13.2 kV", "fases": "Trifásico" } },
+      { "id": "b", "t": "fus", "f": {} },
+      { "id": "c", "t": "trafo", "f": { "cantidad": "2", "configuracion": "Independientes", "potencia": "75", "potencia2": "112.5", "med1": "Directa", "med2": "Semidirecta" } },
+      { "id": "d", "t": "medidor", "f": {}, "rama": 1 },
+      { "id": "e", "t": "tc", "f": {}, "rama": 2 }
+    ]
+  },
+  "expect": {
+    "meterType": "T1 Directa · T2 Semidirecta",
+    "fuse": { "amp": 12, "In": 8.2010, "text": "12 A tipo K", "src": "cálculo 1.3 × In", "mono": false, "unit": 187.5, "kv": 13.2, "ti": 2 },
+    "checks": [
+      { "level": "warn", "text": "Trafo 2: indicaste medida semidirecta pero todavía no tiene medidor." },
+      { "level": "warn", "text": "No hay bloque de pruebas entre los transformadores de medida y el medidor. Revísalo con el Código de Medida (CREG 038 de 2014)." }
+    ],
+    "summaries": { "c": "2 trafos independientes · T1: 75 kVA, T2: 112.5 kVA (total 187.5 kVA)" }
+  }
+}

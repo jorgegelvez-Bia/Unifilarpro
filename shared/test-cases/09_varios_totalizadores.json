@@ -1,0 +1,19 @@
+{
+  "name": "Dos totalizadores sin equipos de medida",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "BT", "tension": "220/127 V" } },
+      { "id": "b", "t": "breaker", "f": { "cantidad": "2", "med1": "Directa", "med2": "Indirecta" } }
+    ]
+  },
+  "expect": {
+    "meterType": "Tot.1 Directa · Tot.2 Indirecta",
+    "fuse": null,
+    "checks": [
+      { "level": "warn", "text": "Totalizador 1: indicaste medida directa pero todavía no tiene medidor." },
+      { "level": "warn", "text": "Totalizador 2: indicaste medida indirecta pero todavía no tiene medidor." },
+      { "level": "warn", "text": "Totalizador 2: la medida indirecta lleva TC y TT." }
+    ],
+    "summaries": { "b": "2 totalizadores" }
+  }
+}

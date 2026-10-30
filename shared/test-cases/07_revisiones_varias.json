@@ -1,0 +1,29 @@
+{
+  "name": "Irregularidad, equipos dañados y varias revisiones",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "fases": "Trifásico" } },
+      { "id": "b", "t": "dps", "f": { "estado": "Dañado", "malos": "1", "buenos": "2" } },
+      { "id": "c", "t": "tc", "f": { "cantidad": "2", "relacion": "200/5 A" } },
+      { "id": "d", "t": "medidor", "f": { "estado": "Por revisar", "obs": "sin sello" } },
+      { "id": "e", "t": "otros", "f": { "descripcion": "Residencial" } },
+      { "id": "f", "t": "irreg", "f": { "tipo": "Puente que salta el medidor", "fase": "R" } },
+      { "id": "g", "t": "spt", "f": { "estado": "Dañado", "obs": "varilla suelta", "para": "Gabinete de medidor" } }
+    ]
+  },
+  "expect": {
+    "meterType": "Semidirecta",
+    "fuse": null,
+    "checks": [
+      { "level": "bad", "text": "Irregularidad 1: Puente que salta el medidor · fase R." },
+      { "level": "bad", "text": "DPS: 1 dañado y 2 en buen estado." },
+      { "level": "bad", "text": "Puesta a tierra dañado: varilla suelta." },
+      { "level": "warn", "text": "Medidor principal por revisar: sin sello." },
+      { "level": "warn", "text": "La red es MT y hay TC sin TT: en MT la medida es indirecta y necesita TT." },
+      { "level": "warn", "text": "No hay bloque de pruebas entre los transformadores de medida y el medidor. Revísalo con el Código de Medida (CREG 038 de 2014)." },
+      { "level": "warn", "text": "TC: hay 2 y el sistema es trifásico (3 fases)." },
+      { "level": "warn", "text": "Hay otros usuarios conectados después de los TC: su consumo quedaría registrado en este medidor." }
+    ],
+    "summaries": { "b": "2 buenos · 1 dañado", "e": "Residencial", "f": "Puente que salta el medidor · fase R", "g": "Para gabinete de medidor" }
+  }
+}

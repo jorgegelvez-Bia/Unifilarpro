@@ -1,0 +1,22 @@
+{
+  "name": "Fusible calculado (no está en tabla) a 34.5 kV",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "tension": "34.5 kV", "fases": "Trifásico" } },
+      { "id": "b", "t": "fus", "f": {} },
+      { "id": "c", "t": "trafo", "f": { "potencia": "500" } },
+      { "id": "d", "t": "tt", "f": { "cantidad": "3" } },
+      { "id": "e", "t": "tc", "f": { "cantidad": "3", "relacion": "1000/5 A" } },
+      { "id": "f", "t": "bloque", "f": {} },
+      { "id": "g", "t": "medidor", "f": {} }
+    ]
+  },
+  "expect": {
+    "meterType": "Indirecta",
+    "fuse": { "amp": 12, "In": 8.3674, "text": "12 A tipo K", "src": "cálculo 1.3 × In", "mono": false, "unit": 500, "kv": 34.5, "ti": 2 },
+    "checks": [
+      { "level": "ok", "text": "Sin observaciones. El diagrama tiene los elementos básicos para el tipo de medida." }
+    ],
+    "summaries": { "d": "×3", "e": "×3 · 1000/5 A" }
+  }
+}
