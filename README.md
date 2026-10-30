@@ -15,8 +15,8 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 | 1 | Repo, FastAPI, Vite + React, CI, README | ✅ |
 | 2 | Catálogo + modelos (Python), exportación a JSON, botones por grupo y lista de elementos | ✅ |
 | 5 | Reglas (tipo de medida, fusible, revisiones) en Python + copia TS + casos compartidos | ✅ (sin avisos de conexiones/fasorial) |
-| 3 | Motor de dibujo SVG del unifilar | ⏳ |
-| 4 | Doble circuito, transferencia, ramales + prueba anti‑cruces | ⏳ |
+| 3 | Motor de dibujo SVG del unifilar (columna, medida al lado, gabinete, celda, irregularidades, leyenda RETIE, rótulo) | ✅ |
+| 4 | Doble circuito, transferencia, ramales | ✅ dibujo · ⏳ prueba anti‑cruces de 1.000 diagramas (Playwright) |
 | 6 | Exportar PNG / PDF | ⏳ |
 | 7 | Diagrama de conexiones | ⏳ |
 | 8 | Diagrama fasorial | ⏳ |
@@ -37,6 +37,7 @@ backend/    Python 3.12 + FastAPI (fuente oficial del catálogo y las reglas)
 frontend/   React + TypeScript + Vite + Tailwind (esto es lo que se importa en Lovable)
   src/catalog/       catalog.json (generado, no editar a mano)
   src/checks/        copia TS de las reglas, para trabajar sin internet
+  src/diagram/       motor de dibujo SVG del unifilar (symbols.ts + engine.ts)
   src/store/         estado (Zustand)
   src/components/    botones por grupo, lista, formularios, revisiones
 shared/test-cases/  casos JSON que deben dar igual en Python y en TypeScript
