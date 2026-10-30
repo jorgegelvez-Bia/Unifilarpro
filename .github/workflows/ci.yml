@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
 jobs:
   backend:
     name: Backend (pytest)
-    runs-on: ubuntu-latest
+    # Versión fija: ubuntu-latest está pasando a Ubuntu 26.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: backend
@@ -23,8 +24,9 @@ jobs:
         run: pytest -q --cov=app/rules --cov-report=term-missing --cov-fail-under=90
 
   frontend:
-    name: Frontend (vitest + build)
-    runs-on: ubuntu-latest
+    name: Frontend (vitest + build + anti-cruces)
+    # Versión fija: Playwright todavía no instala Chromium en Ubuntu 26.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
