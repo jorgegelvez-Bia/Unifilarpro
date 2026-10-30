@@ -4,7 +4,8 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: 'e2e',
   testMatch: '*.spec.ts',
-  reporter: process.env.CI ? 'list' : 'line',
+  // En GitHub, 'github' muestra el error como anotación en la página de la corrida.
+  reporter: process.env.CI ? [['github'], ['list']] : 'line',
   use: { baseURL: 'http://localhost:5299', ...devices['Desktop Chrome'] },
   webServer: {
     command: 'npx vite --port 5299 --strictPort',
