@@ -19,7 +19,7 @@ export default function App() {
       {showList && <MyDiagrams onClose={() => setShowList(false)} />}
       <ProjectForm />
       {/* En celular: diagrama, lista y luego botones (igual al HTML). */}
-      <div className="grid items-start gap-3.5 lg:grid-cols-[minmax(0,390px)_minmax(0,1fr)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-3.5 lg:grid-cols-[minmax(0,390px)_minmax(0,1fr)]">
         <div className="order-3 flex flex-col gap-3.5 lg:order-1">
           <AddButtons />
         </div>
