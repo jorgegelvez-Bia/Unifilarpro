@@ -20,7 +20,7 @@ export function ChecksPanel() {
           {items.map((c, i) => (
             <li
               key={i}
-              className={`rounded-md px-2.5 py-1.5 ${c.level === 'bad' ? 'bg-bad-bg text-bad' : c.level === 'ok' ? 'bg-ok-bg' : 'bg-warn-bg'}`}
+              className={`rounded-[7px] border-l-[3px] px-2.5 py-2 ${c.level === 'bad' ? 'border-bad bg-bad-bg' : c.level === 'ok' ? 'border-accent bg-ok-bg' : 'border-volt bg-warn-bg'}`}
             >
               {c.text}
             </li>

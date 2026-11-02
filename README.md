@@ -17,7 +17,7 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 | 5 | Reglas (tipo de medida, fusible, revisiones) en Python + copia TS + casos compartidos | ✅ (sin avisos de conexiones/fasorial) |
 | 3 | Motor de dibujo SVG del unifilar (columna, medida al lado, gabinete, celda, irregularidades, leyenda RETIE, rótulo) | ✅ |
 | 4 | Doble circuito, transferencia, ramales + prueba anti‑cruces (1.000 diagramas al azar, 0 choques, en CI) | ✅ |
-| 6 | Exportar PNG / PDF | ⏳ |
+| 6 | Exportar imagen PNG (4×, máx. ~14 MP, fuentes incluidas) e informe PDF (proyecto, diagrama, equipos, revisiones, firmas) | ✅ |
 | 7 | Diagrama de conexiones | ⏳ |
 | 8 | Diagrama fasorial | ⏳ |
 | 9 | Supabase (login, guardado, sincronización) + PWA sin internet | ⏳ |
@@ -96,6 +96,9 @@ Dibuja 1.000 diagramas al azar y revisa que ningún texto, símbolo, línea o ca
 sobre otro. Si algo falla, el mensaje dice el número del diagrama; para verlo, abre
 `http://localhost:5173/e2e/harness.html` con `npm run dev` y escribe en la consola
 `showDiagram(número)`.
+
+Las mismas pruebas tocan «Imagen PNG» e «Informe PDF» en la app y revisan los archivos.
+Para mirarlos tú mismo: `EXPORT_DIR=<carpeta> npm run test:e2e` los guarda en esa carpeta.
 
 GitHub Actions corre todas las pruebas y el build en cada push (`.github/workflows/ci.yml`).
 
