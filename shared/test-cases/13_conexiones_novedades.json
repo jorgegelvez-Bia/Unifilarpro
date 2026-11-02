@@ -1,0 +1,47 @@
+{
+  "name": "Diagramas de conexiones con novedades de cableado (válidas e incompletas)",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "MT", "fases": "Trifásico" } },
+      { "id": "b", "t": "tt", "f": {} },
+      { "id": "c", "t": "tc", "f": {} },
+      { "id": "d", "t": "bloque", "f": {} },
+      { "id": "e", "t": "medidor", "f": {} },
+      { "id": "f", "t": "irreg", "f": { "tipo": "Otra", "detalle": "Cable extra en la bornera" } },
+      { "id": "g", "t": "conex", "f": {
+        "tipo": "Indirecta Aron (2 TC + 2 TT)", "modelo": "Elster A1800", "resp": "Con respaldo · un solo bloque", "bornes": "Simétrico",
+        "nov": [
+          { "t": "TC con S1 y S2 invertidos", "fase": "R" },
+          { "t": "Cable de corriente suelto", "fase": "S" },
+          { "t": "Tensiones cruzadas entre fases", "fase": "R y T" },
+          { "t": "Neutro suelto" },
+          { "t": "Otra", "txt": "  borne 5 flojo " },
+          { "t": "" }
+        ] } },
+      { "id": "h", "t": "conex", "f": {
+        "tipo": "Directa monofásica", "modelo": "Genérico", "resp": "Con respaldo · dos bloques",
+        "nov": [
+          { "t": "Puente en el bloque de pruebas", "fase": "R" },
+          { "t": "Cable de tensión suelto", "fase": "R" },
+          { "t": "Neutro suelto" },
+          { "t": "Otra", "txt": "   " }
+        ] } }
+    ]
+  },
+  "expect": {
+    "meterType": "Indirecta",
+    "fuse": null,
+    "checks": [
+      { "level": "bad", "text": "Irregularidad 1: Cable extra en la bornera." },
+      { "level": "bad", "text": "Irregularidad 2 (cableado): TC con S1 y S2 invertidos — fase R." },
+      { "level": "bad", "text": "Irregularidad 3 (cableado): Tensiones cruzadas entre fases (R y T)." },
+      { "level": "bad", "text": "Irregularidad 4 (cableado): borne 5 flojo." },
+      { "level": "bad", "text": "Irregularidad 5 (cableado): Cable de tensión suelto — fase R." },
+      { "level": "bad", "text": "Irregularidad 6 (cableado): Neutro suelto." }
+    ],
+    "summaries": {
+      "g": "Indirecta Aron (2 TC + 2 TT) · Elster A1800 · con respaldo · medidor simétrico · 3 novedades",
+      "h": "Directa monofásica · 2 novedades"
+    }
+  }
+}

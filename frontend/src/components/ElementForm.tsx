@@ -3,6 +3,7 @@ import { TYPES, bkFields, fieldsOf, trFields, type FieldSpec } from '@/catalog';
 import { brName, celdaCands, celdaSel, fuseFor, grpOf, multiT, multiTr, trN } from '@/checks';
 import { useStore } from '@/store/diagram';
 import type { Element } from '@/types';
+import { ConexForm } from './ConexForm';
 import { ElementCard } from './ElementList';
 
 const IRR_BYP = ['Línea directa antes de los TC', 'Conexión directa antes de la medida', 'Acometida derivada antes del medidor', 'Fase sin pasar por la medida'];
@@ -30,6 +31,8 @@ export function ElementForm({ e }: { e: Element }) {
   const setRama = useStore((s) => s.setRama);
   const setAddRama = useStore((s) => s.setAddRama);
   const toggleOpen = useStore((s) => s.toggleOpen);
+
+  if (e.t === 'conex') return <ConexForm e={e} />;
 
   const T = multiT(d);
   const TM = T?.id === e.id;

@@ -14,11 +14,11 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 |---|---|---|
 | 1 | Repo, FastAPI, Vite + React, CI, README | ✅ |
 | 2 | Catálogo + modelos (Python), exportación a JSON, botones por grupo y lista de elementos | ✅ |
-| 5 | Reglas (tipo de medida, fusible, revisiones) en Python + copia TS + casos compartidos | ✅ (sin avisos de conexiones/fasorial) |
+| 5 | Reglas (tipo de medida, fusible, revisiones) en Python + copia TS + casos compartidos | ✅ (falta solo el aviso del fasorial, fase 8) |
 | 3 | Motor de dibujo SVG del unifilar (columna, medida al lado, gabinete, celda, irregularidades, leyenda RETIE, rótulo) | ✅ |
 | 4 | Doble circuito, transferencia, ramales + prueba anti‑cruces (1.000 diagramas al azar, 0 choques, en CI) | ✅ |
 | 6 | Exportar imagen PNG (4×, máx. ~14 MP, fuentes incluidas) e informe PDF (proyecto, diagrama, equipos, revisiones, firmas) | ✅ |
-| 7 | Diagrama de conexiones | ⏳ |
+| 7 | Diagrama de conexiones (8 tipos, bornera asimétrica/simétrica, 4 bloques, respaldo, 27 medidores con lupa, Aron, novedades de cableado en el dibujo y en Revisiones) | ✅ |
 | 8 | Diagrama fasorial | ⏳ |
 | 9 | Supabase (login, guardado, sincronización) + PWA sin internet | ⏳ |
 | 10 | Despliegue + importar el frontend en Lovable | ⏳ |

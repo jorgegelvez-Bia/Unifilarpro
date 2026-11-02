@@ -105,3 +105,35 @@ def test_revisiones_ramal_y_estado():
 def test_utilidades():
     assert js_number("abc") is None and js_number("") == 0.0
     assert num_txt(0.5) == "0.5" and num_txt(12.0) == "12"
+
+
+# ---- Diagrama de conexiones (fase 7)
+from app.rules.wiring import WR_T, wr_default, wr_nov_text, wr_phase_opts, wr_summary  # noqa: E402
+
+
+def _d(*els):
+    return {"els": [{"id": str(i), "t": t, "f": f} for i, (t, f) in enumerate(els)]}
+
+
+def test_wr_default_segun_unifilar():
+    assert wr_default(_d(("tt", {}), ("tc", {}))) == WR_T[3]
+    assert wr_default(_d(("red", {"fases": "Bifásico"}), ("tc", {}))) == WR_T[1]
+    assert wr_default(_d(("red", {"fases": "Monofásico"}), ("tc", {}))) == WR_T[2]
+    assert wr_default(_d(("red", {"fases": "Monofásico"}))) == WR_T[7]
+    assert wr_default(_d(("red", {"fases": "Bifásico"}))) == WR_T[6]
+    assert wr_default(_d()) == WR_T[5]
+
+
+def test_wr_phase_opts():
+    assert wr_phase_opts(WR_T[0], "Tensiones cruzadas entre fases") == ["R y S", "R y T", "S y T"]
+    assert wr_phase_opts(WR_T[4], "Cable de corriente suelto") == ["R", "T"]
+    assert wr_phase_opts(WR_T[1], "Cable de tensión suelto") == ["R", "S"]
+    assert wr_phase_opts(WR_T[0], "Neutro suelto") == []
+    assert wr_phase_opts("", "") == []
+
+
+def test_wr_nov_text_sin_fase_y_resumen_sin_diagrama():
+    assert wr_nov_text({"t": "Neutro suelto"}) == "Neutro suelto"
+    e = {"id": "x", "t": "conex", "f": {"tipo": WR_T[5], "nov": [{"t": "Neutro suelto"}]}}
+    assert wr_summary(e, None) == WR_T[5]
+    assert wr_summary(e, _d()) == WR_T[5] + " · 1 novedad"

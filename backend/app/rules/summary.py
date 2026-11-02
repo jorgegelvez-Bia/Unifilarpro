@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from app.catalog import TYPES
 from app.rules.common import Diag, El, fv, grp_of, js_int, multi_t, tr_k, tr_n, tr_tot, num_txt
+from app.rules.wiring import wr_summary
 
 SKIP_CELDA = ("irreg", "celda", "gabinete", "bloque", "bloquer", "conex", "fasor")
 
@@ -72,8 +73,10 @@ def summary(el: El, d: Diag | None = None) -> str:
         parts = [f["tipo"]] if f.get("tipo") in ("Manual", "Automática") else []
         parts.append("conectado: " + (n.strip() or f.get("enUso") or "Circuito 1"))
         return " · ".join(parts)
-    if t in ("fasor", "conex"):
-        # Se completan en las fases 7 (conexiones) y 8 (fasorial).
+    if t == "conex":
+        return wr_summary(el, d)
+    if t == "fasor":
+        # Se completa en la fase 8 (fasorial).
         return fv(el, "tipo")
     if t == "breaker":
         n = tr_n(el)

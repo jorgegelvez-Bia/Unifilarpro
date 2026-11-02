@@ -4,6 +4,7 @@ import type { CheckItem, DiagramLike } from '@/types';
 import { NF, brName, fv, jsFloat, jsInt, jsNumber, multiT, numTxt, rama, trN } from './common';
 import { fuseFor } from './fuse';
 import { summary } from './summary';
+import { wrNovText, wrNovs } from './wiring';
 
 export const OK_TEXT = 'Sin observaciones. El diagrama tiene los elementos básicos para el tipo de medida.';
 
@@ -18,7 +19,10 @@ export function checks(d: DiagramLike): CheckItem[] {
 
   els.filter((e) => e.t === 'irreg').forEach((e, k) => bad(`Irregularidad ${k + 1}: ${summary(e, d)}.`));
   // TODO fase 8: avisos del fasorial ("Fasorial · …").
-  // TODO fase 7: novedades del diagrama de conexiones ("Irregularidad n (cableado): …").
+  {
+    let k = els.filter((e) => e.t === 'irreg').length;
+    els.filter((e) => e.t === 'conex').forEach((c) => wrNovs(c, d).forEach((n) => bad(`Irregularidad ${++k} (cableado): ${wrNovText(n)}.`)));
+  }
 
   for (const e of els) {
     if (fv(e, 'estado') !== 'Dañado') continue;
