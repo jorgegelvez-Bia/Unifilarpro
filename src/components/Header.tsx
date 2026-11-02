@@ -1,3 +1,5 @@
+import { ExportButtons } from '@/components/ExportButtons';
+
 export function Header({ onToggleList }: { onToggleList: () => void }) {
   return (
     <header className="flex flex-wrap items-center justify-between gap-2.5">
@@ -9,9 +11,12 @@ export function Header({ onToggleList }: { onToggleList: () => void }) {
           <small className="block text-[13px] font-normal text-muted">Diagrama unifilar del sistema de medida</small>
         </span>
       </h1>
-      <button className="btn" onClick={onToggleList}>
-        Mis diagramas
-      </button>
+      <div className="flex flex-wrap gap-2">
+        <button className="btn" onClick={onToggleList}>
+          Mis diagramas
+        </button>
+        <ExportButtons />
+      </div>
     </header>
   );
 }

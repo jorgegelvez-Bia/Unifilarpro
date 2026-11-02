@@ -11,6 +11,7 @@ export default {
         line: 'var(--line)',
         accent: 'var(--accent)',
         nm: 'var(--nm)',
+        volt: 'var(--volt)',
         bad: 'var(--bad)',
         'bad-bg': 'var(--bad-bg)',
         'ok-bg': 'var(--ok-bg)',
