@@ -4,7 +4,8 @@
  * Con la misma semilla siempre da los mismos diagramas.
  */
 import { TYPES, fieldsOf } from '@/catalog';
-import { fillDefaults } from '@/checks';
+import { WR_BLQ, WR_BORNES, WR_N, WR_RESP, WR_RETS2, WR_T, fillDefaults, wrDefault, wrPhaseOpts } from '@/checks';
+import { WR_MOD } from '@/diagram/wiring';
 import { mk } from '@/store/diagram';
 import type { DiagramLike, Element } from '@/types';
 
@@ -96,6 +97,27 @@ function realistic(r: () => number): string[] {
   return seq;
 }
 
+const LONG = 'borne 5 flojo y cable de tensión pelado detrás de la bornera, con marcas de calentamiento en el aislamiento';
+
+/** Diagrama de conexiones al azar: tipo, bornera, bloque, respaldo, marcas y novedades. */
+function randomConex(r: () => number, els: Element[]): Element {
+  const pick = <T,>(a: T[]) => a[Math.floor(r() * a.length)];
+  const e = mk('conex');
+  e.f.tipo = r() < 0.2 ? wrDefault({ els }) : pick(WR_T);
+  e.f.bornes = pick(WR_BORNES);
+  e.f.bloque = pick(WR_BLQ);
+  e.f.resp = pick(WR_RESP);
+  e.f.modelo = pick(WR_MOD);
+  e.f.modeloR = pick(WR_MOD);
+  e.f.modeloTxt = pick(['', 'Medidor de prueba']);
+  e.f.retS2 = pick(WR_RETS2);
+  e.f.nov = Array.from({ length: Math.floor(r() * 5) }, () => {
+    const t = pick(WR_N), o = wrPhaseOpts(e.f.tipo, t);
+    return { t, fase: o.length ? pick(o) : '', txt: t === 'Otra' ? pick(['cable flojo', LONG]) : '' };
+  });
+  return e;
+}
+
 export function randomDiagram(i: number, seed = 20261030): DiagramLike {
   const r = rng(seed + i * 7919);
   const types = i % 2 === 0 ? realistic(r) : Array.from({ length: 1 + Math.floor(r() * 16) }, () => BUTTONS[Math.floor(r() * BUTTONS.length)]);
@@ -106,5 +128,7 @@ export function randomDiagram(i: number, seed = 20261030): DiagramLike {
     els.push(e);
   }
   assignRamas(els, r);
+  // 1 de cada 4 lleva diagrama de conexiones (con su propio azar, para no cambiar los demás).
+  if (i % 4 === 1) els.push(randomConex(rng(seed * 3 + i), els));
   return fillDefaults({ els, p: { nombre: i % 3 ? 'Proyecto ' + i : '', frontera: i % 4 ? 'FRT' + (10000 + i) : '' } });
 }

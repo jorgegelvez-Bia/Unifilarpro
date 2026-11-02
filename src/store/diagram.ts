@@ -5,7 +5,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CATALOG, TYPES, fieldsOf } from '@/catalog';
-import { applyAutoFuse, brName, fillDefaults, mainBk, multiT, multiTr, trN, grpOf } from '@/checks';
+import { applyAutoFuse, brName, fillDefaults, mainBk, multiT, multiTr, trN, grpOf, wrDefault } from '@/checks';
 import type { Diagram, Element } from '@/types';
 
 export const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -183,6 +183,7 @@ export const useStore = create<State>()(
           if (t === 'celda') el.f.incl = [];
           if (t === 'gabinete') el.f._gm = 1;
           if (t === 'acom') el.f._pfv = 1;
+          if (t === 'conex') { el.f.tipo = wrDefault(cur); el.f.bornes = 'Asimétrico'; el.f.nov = []; }
           if (t === 'transc') {
             const db = [...cur.els].reverse().find((x) => x.t === 'doble');
             if (db) {
@@ -197,9 +198,11 @@ export const useStore = create<State>()(
             const T = multiT(d);
             if (T && t !== 'trafo') {
               const k = Math.min(addRama, trN(T));
-              if (k > 0) { el.rama = k; d.els.push(el); openId = T.id; }
+              if (k > 0) { el.rama = k; d.els.push(el); openId = T.id; return; }
               else d.els.splice(d.els.indexOf(T), 0, el);
             } else d.els.push(el);
+            // Los diagramas de conexiones y fasorial se abren solos para escoger el tipo.
+            if (t === 'conex' || t === 'fasor') openId = el.id;
           });
           set({ openId, toast: `${TYPES[t].name} agregado. Tócalo en la lista para poner sus datos.` });
         },
