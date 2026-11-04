@@ -1,0 +1,40 @@
+{
+  "name": "Diagramas fasoriales: sin tensión, sin corriente, desbalance, ángulos raros, Aron y factor de potencia",
+  "diagram": {
+    "els": [
+      { "id": "a", "t": "red", "f": { "nivel": "BT", "fases": "Trifásico" } },
+      { "id": "b", "t": "fasor", "f": {
+        "sis": "Trifásico", "seq": "R-S-T (positiva)", "modo": "Ángulo en grados",
+        "V0": "120", "V1": "121", "V2": "95", "I0": "2.5", "I1": "0.05", "I2": "3", "A0": "25", "A1": "200", "A2": "-130" } },
+      { "id": "c", "t": "fasor", "f": {
+        "sis": "Trifásico 3 hilos (Aron)", "seq": "R-S-T (positiva)", "modo": "Factor de potencia",
+        "V0": "13200", "V1": "0", "A0": "0,5", "C0": "Ind", "A1": "-0.9", "C1": "Ind" } },
+      { "id": "d", "t": "fasor", "f": {
+        "sis": "Trifásico 3 hilos (Aron)", "seq": "R-T-S (negativa)", "modo": "Ángulo en grados",
+        "V0": "100", "V1": "50", "VA0": "30", "A0": "30", "A1": "-70" } },
+      { "id": "e", "t": "fasor", "f": { "sis": "Bifásico", "modo": "Ángulo en grados" } },
+      { "id": "f", "t": "fasor", "f": { "sis": "Monofásico", "modo": "Ángulo en grados", "A0": "abc" } }
+    ]
+  },
+  "expect": {
+    "meterType": "Directa",
+    "fuse": null,
+    "checks": [
+      { "level": "bad", "text": "Fasorial · Fase S: sin corriente (revisar puente en bloque, TC o cable de corriente)." },
+      { "level": "bad", "text": "Fasorial · Fase S: corriente invertida (-160°): posible TC con S1/S2 invertidos." },
+      { "level": "bad", "text": "Fasorial · Fase T: tensión desbalanceada (95 V contra promedio 112.0 V)." },
+      { "level": "bad", "text": "Fasorial · Fase T: ángulo de -130°: la corriente parece de otra fase (tensiones o corrientes cruzadas)." },
+      { "level": "bad", "text": "Fasorial · Elemento 1: tensión desbalanceada (13200 V contra promedio 6600.0 V)." },
+      { "level": "bad", "text": "Fasorial · Elemento 2: sin tensión (revisar cuchilla, fusible o cable de tensión)." },
+      { "level": "bad", "text": "Fasorial · Elemento 2: corriente invertida (154°): posible TC con S1/S2 invertidos." },
+      { "level": "bad", "text": "Fasorial · Aron: la diferencia entre ángulos (100°) debería estar cerca de 60° con carga equilibrada; revisar secuencia o cruces." }
+    ],
+    "summaries": {
+      "b": "Trifásico · 3 ángulos",
+      "c": "Trifásico · 2 ángulos",
+      "d": "Trifásico · 2 ángulos",
+      "e": "Bifásico · sin datos",
+      "f": "Monofásico · sin datos"
+    }
+  }
+}

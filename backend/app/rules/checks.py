@@ -12,6 +12,7 @@ from __future__ import annotations
 from app.catalog import TYPES
 from app.rules.common import NF, Diag, br_name, fv, js_float, js_int, js_number, multi_t, num_txt, rama, tr_n
 from app.rules.fuse import fuse_for
+from app.rules.phasor import fs_warn
 from app.rules.summary import summary
 from app.rules.wiring import wr_nov_text, wr_novs
 
@@ -30,7 +31,9 @@ def checks(d: Diag) -> list[dict[str, str]]:
 
     for k, e in enumerate([e for e in els if e["t"] == "irreg"], start=1):
         bad(f"Irregularidad {k}: {summary(e, d)}.")
-    # TODO fase 8: avisos del fasorial ("Fasorial · …").
+    for c in (e for e in els if e["t"] == "fasor"):
+        for w in fs_warn(c):
+            bad("Fasorial · " + w)
     k = sum(1 for e in els if e["t"] == "irreg")
     for c in (e for e in els if e["t"] == "conex"):
         for n in wr_novs(c, d):

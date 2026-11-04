@@ -52,6 +52,17 @@ def num_txt(x: float) -> str:
     return repr(round(x, 10)).rstrip("0").rstrip(".")
 
 
+
+def js_fixed(x: float, n: int) -> str:
+    """Como `x.toFixed(n)` de JavaScript: redondea la mitad hacia arriba (0.125 → "0.13")."""
+    from decimal import ROUND_HALF_UP, Decimal
+
+    if x == 0:
+        x = 0.0  # -0 se escribe "0"
+    q = Decimal(x).quantize(Decimal(1).scaleb(-n), rounding=ROUND_HALF_UP)
+    return f"{q:.{n}f}"
+
+
 def fv(e: El, k: str) -> str:
     """Valor de un campo como texto ('' si no existe)."""
     v = (e.get("f") or {}).get(k)

@@ -2,6 +2,7 @@
 import { TYPES } from '@/catalog';
 import type { DiagramLike, Element } from '@/types';
 import { fv, grpOf, jsInt, multiT, numTxt, trK, trN, trTot } from './common';
+import { fsSummary } from './phasor';
 import { wrSummary } from './wiring';
 
 const SKIP_CELDA = ['irreg', 'celda', 'gabinete', 'bloque', 'bloquer', 'conex', 'fasor'];
@@ -55,8 +56,7 @@ export function summary(el: Element, d?: DiagramLike): string {
     return [...(f.tipo === 'Manual' || f.tipo === 'Automática' ? [f.tipo] : []), 'conectado: ' + (n.trim() || f.enUso || 'Circuito 1')].join(' · ');
   }
   if (t === 'conex') return wrSummary(el, d);
-  // Se completa en la fase 8 (fasorial).
-  if (t === 'fasor') return fv(el, 'tipo');
+  if (t === 'fasor') return fsSummary(el, d);
   if (t === 'breaker') {
     const n = trN(el);
     if (n > 1) return `${n} totalizadores`;

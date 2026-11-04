@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from app.catalog import TYPES
 from app.rules.common import Diag, El, fv, grp_of, js_int, multi_t, tr_k, tr_n, tr_tot, num_txt
+from app.rules.phasor import fs_summary
 from app.rules.wiring import wr_summary
 
 SKIP_CELDA = ("irreg", "celda", "gabinete", "bloque", "bloquer", "conex", "fasor")
@@ -76,8 +77,7 @@ def summary(el: El, d: Diag | None = None) -> str:
     if t == "conex":
         return wr_summary(el, d)
     if t == "fasor":
-        # Se completa en la fase 8 (fasorial).
-        return fv(el, "tipo")
+        return fs_summary(el, d)
     if t == "breaker":
         n = tr_n(el)
         if n > 1:

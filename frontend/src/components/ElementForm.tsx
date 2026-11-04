@@ -5,6 +5,7 @@ import { useStore } from '@/store/diagram';
 import type { Element } from '@/types';
 import { ConexForm } from './ConexForm';
 import { ElementCard } from './ElementList';
+import { FasorForm } from './FasorForm';
 
 const IRR_BYP = ['Línea directa antes de los TC', 'Conexión directa antes de la medida', 'Acometida derivada antes del medidor', 'Fase sin pasar por la medida'];
 const WIDE = ['relacion', 'serial', 'descripcion', 'obs', 'encierra', 'configuracion', 'tipo', 'detalle'];
@@ -33,6 +34,7 @@ export function ElementForm({ e }: { e: Element }) {
   const toggleOpen = useStore((s) => s.toggleOpen);
 
   if (e.t === 'conex') return <ConexForm e={e} />;
+  if (e.t === 'fasor') return <FasorForm e={e} />;
 
   const T = multiT(d);
   const TM = T?.id === e.id;

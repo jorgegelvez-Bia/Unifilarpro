@@ -10,6 +10,7 @@
 import { TYPES } from '@/catalog';
 import { MTR, NF, faseText, irrLabel, meterType, multiT, segSplit, summary, trK, trN } from '@/checks';
 import type { DiagramLike } from '@/types';
+import { fasSVG, fsNeedW } from './phasor';
 import { wiringSVG, wrNeedW } from './wiring';
 import {
   DRAW, L, PH, RC, RCX, RC_G, RC_N, SYM, X, badge, dot, esc, meterBox, phCols, stClass, stateText, tri, wrap,
@@ -670,11 +671,13 @@ function build(d: DiagramLike, P: Palette): string {
   }
   // Diagrama de conexiones al pie (sus novedades siguen la numeración de las irregularidades).
   allRaw.filter((e) => e.t === 'conex').forEach((c) => { W = Math.max(W, wrNeedW(c, d)); });
+  allRaw.filter((e) => e.t === 'fasor').forEach((c) => { W = Math.max(W, fsNeedW(c)); });
   {
     let k = irrAll.length;
     allRaw.filter((e) => e.t === 'conex').forEach((c) => { const r = wiringSVG(c, W, y, k + 1, d); parts.push(r.g); y = r.y; k += r.n; });
   }
-  // TODO fase 8: diagrama fasorial al pie.
+  // Diagrama fasorial al pie.
+  allRaw.filter((e) => e.t === 'fasor').forEach((c) => { const r = fasSVG(c, W, y); parts.push(r.g); y = r.y; });
 
   // Leyenda de colores RETIE
   const anyBad = all.some((e) => e.f.estado === 'Dañado');

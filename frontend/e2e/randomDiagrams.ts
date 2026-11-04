@@ -4,7 +4,7 @@
  * Con la misma semilla siempre da los mismos diagramas.
  */
 import { TYPES, fieldsOf } from '@/catalog';
-import { WR_BLQ, WR_BORNES, WR_N, WR_RESP, WR_RETS2, WR_T, fillDefaults, wrDefault, wrPhaseOpts } from '@/checks';
+import { FS_MODO, FS_SEQ, FS_SIS, FS_UI, fsDefault, WR_BLQ, WR_BORNES, WR_N, WR_RESP, WR_RETS2, WR_T, fillDefaults, wrDefault, wrPhaseOpts } from '@/checks';
 import { WR_MOD } from '@/diagram/wiring';
 import { mk } from '@/store/diagram';
 import type { DiagramLike, Element } from '@/types';
@@ -118,6 +118,23 @@ function randomConex(r: () => number, els: Element[]): Element {
   return e;
 }
 
+const NUM = ['', '120', '121.5', '0', '95', '13200', '2,5', '0.05', '3', '-1'];
+const ANG = ['', '25', '-30', '200', '-130', '100', '0', '0.95', '-0.5', '0,8'];
+
+/** Diagrama fasorial al azar: sistema, secuencia, modo y datos medidos (algunos raros). */
+function randomFasor(r: () => number, els: Element[]): Element {
+  const pick = <T,>(a: T[]) => a[Math.floor(r() * a.length)];
+  const e = mk('fasor');
+  e.f.sis = r() < 0.3 ? fsDefault({ els }) : pick([...FS_UI, ...FS_SIS]);
+  e.f.seq = pick(FS_SEQ);
+  e.f.modo = pick(FS_MODO);
+  for (let j = 0; j < 3; j++) {
+    e.f['V' + j] = pick(NUM); e.f['I' + j] = pick(NUM); e.f['A' + j] = pick(ANG);
+    e.f['VA' + j] = r() < 0.2 ? pick(['0', '180', '240']) : ''; e.f['C' + j] = pick(['Ind', 'Cap']);
+  }
+  return e;
+}
+
 export function randomDiagram(i: number, seed = 20261030): DiagramLike {
   const r = rng(seed + i * 7919);
   const types = i % 2 === 0 ? realistic(r) : Array.from({ length: 1 + Math.floor(r() * 16) }, () => BUTTONS[Math.floor(r() * BUTTONS.length)]);
@@ -130,5 +147,7 @@ export function randomDiagram(i: number, seed = 20261030): DiagramLike {
   assignRamas(els, r);
   // 1 de cada 4 lleva diagrama de conexiones (con su propio azar, para no cambiar los demás).
   if (i % 4 === 1) els.push(randomConex(rng(seed * 3 + i), els));
+  // y 1 de cada 4 (otros) lleva diagrama fasorial; algunos llevan los dos.
+  if (i % 4 === 3 || i % 20 === 1) els.push(randomFasor(rng(seed * 5 + i), els));
   return fillDefaults({ els, p: { nombre: i % 3 ? 'Proyecto ' + i : '', frontera: i % 4 ? 'FRT' + (10000 + i) : '' } });
 }

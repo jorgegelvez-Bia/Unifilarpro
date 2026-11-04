@@ -137,3 +137,46 @@ def test_wr_nov_text_sin_fase_y_resumen_sin_diagrama():
     e = {"id": "x", "t": "conex", "f": {"tipo": WR_T[5], "nov": [{"t": "Neutro suelto"}]}}
     assert wr_summary(e, None) == WR_T[5]
     assert wr_summary(e, _d()) == WR_T[5] + " · 1 novedad"
+
+
+# ---- Diagrama fasorial (fase 8)
+from app.rules.common import js_fixed  # noqa: E402
+from app.rules.phasor import FS_SIS, fs_data, fs_default, fs_num, fs_rows, fs_summary, fs_ui, fs_warn  # noqa: E402
+
+
+def test_js_fixed_como_javascript():
+    assert js_fixed(0.125, 2) == "0.13"
+    assert js_fixed(-0.4, 0) == "-0"
+    assert js_fixed(-0.0, 1) == "0.0"
+    assert js_fixed(1.005, 2) == "1.00"
+
+
+def test_fs_default_y_filas():
+    assert fs_default(_d(("red", {"fases": "Monofásico"}))) == "Monofásico"
+    assert fs_default(_d(("red", {"fases": "Bifásico"}))) == "Bifásico"
+    assert fs_default(_d()) == "Trifásico"
+    assert fs_default(_d(("conex", {"tipo": "Indirecta Aron (2 TC + 2 TT)"}))) == FS_SIS[1]
+    assert [r["k"] for r in fs_rows({"sis": FS_SIS[2]})] == ["R", "S"]
+    assert fs_ui({"sis": FS_SIS[2]}) == "Bifásico"
+    assert fs_num(None) != fs_num(None)  # NaN
+    assert fs_num(" 1,5 ") == 1.5
+
+
+def test_fs_angulos_por_defecto_y_manuales():
+    e = {"t": "fasor", "f": {"seq": "R-T-S (negativa)", "VA1": "-30", "A0": "0.95", "C0": "Cap", "modo": "Factor de potencia"}}
+    D = fs_data(e)
+    assert [round(x["vdef"]) for x in D] == [0, 240, 120]
+    assert D[1]["man"] and D[1]["vdeg"] == 330
+    assert round(D[0]["phi"], 2) == -18.19
+    bif = fs_data({"t": "fasor", "f": {"sis": "Bifásico"}})
+    assert [x["vdef"] for x in bif] == [0, 180]
+
+
+def test_fs_avisos_mayor_a_90_y_resumen_sin_diagrama():
+    assert fs_warn({"t": "fasor", "f": {"A0": "100"}})[0].startswith("Fase R: ángulo de 100°: la corriente parece de otra fase")
+    e = {"t": "fasor", "f": {"sis": FS_SIS[1], "A0": "100"}}
+    assert fs_warn(e) == ["Elemento 1: ángulo de 100° (mayor a 90°): energía en sentido contrario, revisar polaridad."]
+    assert fs_summary({"t": "fasor", "f": {"A0": "5"}}, None) == "Trifásico · sin datos"
+    # FP -0.5 capacitivo = 240° → -120°: parece de otra fase.
+    assert fs_warn({"t": "fasor", "f": {"modo": "Factor de potencia", "A0": "-0.5", "C0": "Cap"}})[0].startswith("Fase R: ángulo de -120°")
+    assert fs_num("   ") != fs_num("   ")
