@@ -12,7 +12,7 @@ const AW: Record<string, number> = { ' ': 278, '.': 278, ',': 278, '-': 333, I: 
 const arialW = (t: string) => [...t].reduce((a, c) => a + (AW[c] ?? (/\d/.test(c) ? 556 : 600)), 0) * 0.011;
 
 /** Ancho aproximado de un dato de la tabla (letra IBM Plex Mono de 10.5 px). */
-const monoW = (t: string) => t.length * 6.3;
+const monoW = (t: string) => t.length * 6.6;
 
 /**
  * Tabla del fasorial: V, I, φ, FP, P y Q por fase, y el total.
@@ -36,7 +36,7 @@ export function fsTable(e: Element) {
   const S = Math.hypot(Pt, Qt);
   const total = ok ? [S > 0 ? (Pt / S).toFixed(3) : '—', Pt.toFixed(3), Qt.toFixed(3)] : null;
   const col = (j: number) => [...rows.map((r) => r[j]), ...(total && j >= 4 ? [total[j - 4]] : [])];
-  for (let j = 1; j < 6; j++) cw[j + 1] = Math.max(cw[j + 1], cw[j] + Math.max(...col(j).map(monoW)) + 1);
+  for (let j = 1; j < 6; j++) cw[j + 1] = Math.max(cw[j + 1], cw[j] + Math.max(...col(j).map(monoW)) + 4);
   const lineW = Math.max(390, cw[6] + Math.max(...col(6).map(monoW)));
   return { tx, cw, rows, total, lineW };
 }
@@ -103,7 +103,7 @@ export function fasSVG(e: Element, W: number, y0: number): { g: string; y: numbe
     };
     const box = (p: { x: number; y: number; anc: string }): Box => {
       const x1 = p.anc === 'start' ? p.x : p.anc === 'end' ? p.x - w : p.x - w / 2;
-      return { x1: x1 - 1, y1: p.y - 9, x2: x1 + w + 1, y2: p.y + 2.5 };
+      return { x1: x1 - 2.5, y1: p.y - 9.5, x2: x1 + w + 2.5, y2: p.y + 3 };
     };
     let p = at(0, 0);
     if (!free(box(p))) {
