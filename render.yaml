@@ -1,0 +1,22 @@
+# Render (backend). En Render: New › Blueprint › escoger este repositorio.
+# Guía paso a paso: docs/PUBLICAR.md
+services:
+  - type: web
+    name: unifilarpro-api
+    runtime: python
+    plan: free
+    region: virginia # la más cercana a Colombia
+    rootDir: backend
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      # Render los pide al crear el servicio (no quedan en GitHub).
+      - key: CORS_ORIGINS # dirección de la app en Netlify, p. ej. https://unifilarpro.netlify.app
+        sync: false
+      - key: SUPABASE_URL # Project URL de Supabase, p. ej. https://abcd1234.supabase.co
+        sync: false

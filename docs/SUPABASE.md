@@ -73,8 +73,8 @@ instalada, porque el enlace a veces abre el navegador en lugar de la app.
    ```
 
    Este archivo **no se sube a GitHub** (ya está en `.gitignore`).
-3. Para el servidor (backend), cuando lo publiques en la fase 10, se pone la variable
-   `SUPABASE_URL` con la misma dirección.
+3. Para la app publicada y el servidor, las mismas claves se ponen en Netlify y Render:
+   ver **[PUBLICAR.md](PUBLICAR.md)**.
 
 ## 7. Probar
 

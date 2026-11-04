@@ -21,7 +21,7 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 | 7 | Diagrama de conexiones (8 tipos, bornera asimétrica/simétrica, 4 bloques, respaldo, 27 medidores con lupa, Aron, novedades de cableado en el dibujo y en Revisiones) | ✅ |
 | 8 | Diagrama fasorial (trifásico, bifásico, monofásico y Aron; ángulos en grados o FP; tabla V, I, φ, FP, P, Q; avisos en Revisiones) | ✅ |
 | 9 | Supabase (entrar con el correo, solo correos autorizados, sincronización) + guardado en el celular (IndexedDB) + PWA instalable que abre sin internet | ✅ (falta que crees tu proyecto: [docs/SUPABASE.md](docs/SUPABASE.md)) |
-| 10 | Despliegue + importar el frontend en Lovable | ⏳ |
+| 10 | Publicar: app en Netlify, servidor en Render, copia del frontend para Lovable (rama `lovable`) | ✅ (falta que crees las cuentas: [docs/PUBLICAR.md](docs/PUBLICAR.md)) |
 
 La referencia funcional es la versión anterior en un solo archivo, `UnifilarPro_Medida_Bia.html`.
 
@@ -46,6 +46,9 @@ frontend/   React + TypeScript + Vite + Tailwind (esto es lo que se importa en L
 shared/test-cases/  casos JSON que deben dar igual en Python y en TypeScript
 supabase/migrations/  tabla y permisos (RLS) de la nube
 docs/SUPABASE.md    guía paso a paso para conectar la nube
+docs/PUBLICAR.md    guía paso a paso para publicar (Netlify, Render, Lovable)
+netlify.toml        cómo Netlify construye y publica la app
+render.yaml         cómo Render publica el servidor
 scripts/export_catalog.py   genera frontend/src/catalog/catalog.json
 ```
 
@@ -106,6 +109,13 @@ Las mismas pruebas tocan «Imagen PNG» e «Informe PDF» en la app y revisan lo
 Para mirarlos tú mismo: `EXPORT_DIR=<carpeta> npm run test:e2e` los guarda en esa carpeta.
 
 GitHub Actions corre todas las pruebas y el build en cada push (`.github/workflows/ci.yml`).
+
+## Publicar
+
+App en **Netlify**, servidor en **Render** y copia del frontend para **Lovable**: paso a paso en
+**[docs/PUBLICAR.md](docs/PUBLICAR.md)**. Después de configurarlos, cada cambio en `main` se publica solo.
+La rama `lovable` (solo la carpeta `frontend/`) la mantiene `.github/workflows/lovable.yml`;
+no se edita a mano.
 
 ## API
 

@@ -1,0 +1,30 @@
+name: Copia para Lovable
+
+# Lovable no puede conectarse a un repositorio que ya existe y necesita la app en la raíz.
+# Esto deja en la rama "lovable" solo la carpeta frontend/, siempre al día con main.
+# Para llevarla a Lovable: GitHub › rama lovable › Code › Download ZIP (ver docs/PUBLICAR.md).
+
+on:
+  push:
+    branches: [main]
+    paths: ["frontend/**", ".github/workflows/lovable.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lovable
+  cancel-in-progress: true
+
+jobs:
+  rama-lovable:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Separar frontend/ en la rama lovable
+        run: |
+          git subtree split --prefix=frontend -b lovable
+          git push --force origin lovable

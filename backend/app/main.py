@@ -23,7 +23,8 @@ app = FastAPI(title="UnifilarPro Medida API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",") if o.strip()],
+    # rstrip("/"): el navegador manda el origen sin "/" final, aunque lo hayan copiado con ella.
+    allow_origins=[o.strip().rstrip("/") for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",") if o.strip()],
     allow_methods=["*"],
     allow_headers=["*"],
 )
