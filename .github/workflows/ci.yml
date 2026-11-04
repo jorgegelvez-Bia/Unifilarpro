@@ -42,5 +42,5 @@ jobs:
       - run: npm run build
       - name: Instalar Chromium para Playwright
         run: npx playwright install --with-deps chromium
-      - name: Prueba anti-cruces (1.000 diagramas, 0 choques)
+      - name: Pruebas en navegador (anti-cruces, exportar, conexiones, fasorial, sin internet, nube)
         run: npm run test:e2e

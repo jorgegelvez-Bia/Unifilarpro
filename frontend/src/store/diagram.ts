@@ -1,12 +1,14 @@
 /**
- * Estado de la app (Zustand). Por ahora se guarda en este equipo (localStorage);
- * en la fase 9 pasa a IndexedDB + sincronización con Supabase.
+ * Estado de la app (Zustand). Se guarda en el celular (IndexedDB) y, con sesión iniciada,
+ * se sincroniza con Supabase (ver src/sync/). Cada cambio deja el diagrama pendiente de subir.
  */
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { CATALOG, TYPES, fieldsOf } from '@/catalog';
 import { applyAutoFuse, brName, fillDefaults, mainBk, multiT, multiTr, trN, grpOf, wrDefault, fsDefault, FS_SEQ, FS_MODO } from '@/checks';
+import { emptySync, type SyncState } from '@/sync/engine';
 import type { Diagram, Element } from '@/types';
+import { idbStorage } from './idb';
 
 export const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 export const today = () => {
@@ -120,6 +122,10 @@ interface State {
   openId: string | null;
   closedGroups: string[];
   toast: string;
+  /** Qué falta subir a la nube y hasta dónde se bajó. */
+  sync: SyncState;
+  /** Usuario de la nube con el que se sincronizó este celular. */
+  syncUser: string;
 
   setToast: (t: string) => void;
   setProject: (k: string, v: string) => void;
@@ -136,7 +142,23 @@ interface State {
   openDiagram: (id: string) => void;
   duplicate: (id: string) => void;
   deleteDiagram: (id: string) => void;
+  /** Guarda el resultado de una sincronización (y actualiza el diagrama abierto si cambió). */
+  applySync: (r: { diagrams?: Diagram[]; sync: SyncState; changed?: string[] }) => void;
+  setSyncUser: (u: string) => void;
 }
+
+/** Marca un diagrama como pendiente de subir (y quita su lápida si la tenía). */
+const touch = (s: SyncState, id: string): SyncState => {
+  const gone = { ...s.gone };
+  delete gone[id];
+  return { ...s, dirty: s.dirty.includes(id) ? s.dirty : [...s.dirty, id], gone };
+};
+/** Marca un diagrama como borrado (la lápida también se sube). */
+const bury = (s: SyncState, id: string, ts: number): SyncState => ({
+  ...s,
+  dirty: s.dirty.includes(id) ? s.dirty : [...s.dirty, id],
+  gone: { ...s.gone, [id]: ts },
+});
 
 const isEmpty = (d: Diagram) => !d.els.length && !d.p.nombre.trim() && !d.p.frontera.trim();
 export const dTitle = (d: Diagram) => d.p.frontera.trim() || d.p.nombre || 'Diagrama sin nombre';
@@ -150,9 +172,12 @@ export const useStore = create<State>()(
         fn(d);
         applyAutoFuse(d);
         d.updated = Date.now();
+        const had = get().diagrams.some((x) => x.id === d.id);
         const diagrams = get().diagrams.filter((x) => x.id !== d.id);
-        if (!isEmpty(d)) diagrams.push(d);
-        set({ cur: d, diagrams, ...extra });
+        let sync = get().sync;
+        if (!isEmpty(d)) { diagrams.push(d); sync = touch(sync, d.id); }
+        else if (had) sync = bury(sync, d.id, d.updated); // quedó vacío: sale de Mis diagramas
+        set({ cur: d, diagrams, sync, ...extra });
       };
 
       return {
@@ -162,6 +187,8 @@ export const useStore = create<State>()(
         openId: null,
         closedGroups: [],
         toast: '',
+        sync: emptySync(),
+        syncUser: '',
 
         setToast: (toast) => set({ toast }),
         setProject: (k, v) => mutate((d) => { (d.p as any)[k] = v; }),
@@ -247,8 +274,10 @@ export const useStore = create<State>()(
 
         create: (kind) => {
           const d = migrate(newDiagram(kind));
-          const diagrams = kind === 'vacio' ? get().diagrams : [...get().diagrams, d];
-          set({ cur: d, diagrams, addRama: 0, openId: null, toast: 'Diagrama nuevo creado.' });
+          const vacio = kind === 'vacio';
+          const diagrams = vacio ? get().diagrams : [...get().diagrams, d];
+          const sync = vacio ? get().sync : touch(get().sync, d.id);
+          set({ cur: d, diagrams, sync, addRama: 0, openId: null, toast: 'Diagrama nuevo creado.' });
         },
 
         finish: () => {
@@ -267,19 +296,37 @@ export const useStore = create<State>()(
           if (!x) return;
           const c: Diagram = { ...structuredClone(x), id: uid(), updated: Date.now() };
           c.p.nombre = (c.p.nombre || 'Diagrama') + ' (copia)';
-          set({ diagrams: [...get().diagrams, c], toast: 'Copia creada.' });
+          set({ diagrams: [...get().diagrams, c], sync: touch(get().sync, c.id), toast: 'Copia creada.' });
         },
 
         deleteDiagram: (id) => {
           const diagrams = get().diagrams.filter((z) => z.id !== id);
           const cur = get().cur.id === id ? newDiagram('vacio') : get().cur;
-          set({ diagrams, cur, toast: 'Diagrama borrado.' });
+          set({ diagrams, cur, sync: bury(get().sync, id, Date.now()), toast: 'Diagrama borrado.' });
+        },
+
+        applySync: ({ diagrams, sync, changed }) => {
+          if (!diagrams) return set({ sync });
+          let cur = get().cur;
+          if (changed?.includes(cur.id)) {
+            const x = diagrams.find((z) => z.id === cur.id);
+            cur = x ? migrate(x) : newDiagram('vacio'); // lo cambiaron (o borraron) en otro equipo
+          }
+          set({ diagrams, sync, cur });
+        },
+
+        setSyncUser: (syncUser) => {
+          const { syncUser: before, diagrams } = get();
+          if (syncUser === before) return;
+          // Cuenta nueva en este celular: se sube todo lo que hay aquí y se baja todo lo de la nube.
+          set({ syncUser, sync: { dirty: diagrams.map((d) => d.id), gone: {}, lastPull: '' } });
         },
       };
     },
     {
       name: 'unifilarpro-medida',
-      partialize: (s) => ({ cur: s.cur, diagrams: s.diagrams, closedGroups: s.closedGroups }),
+      storage: createJSONStorage(() => idbStorage),
+      partialize: (s) => ({ cur: s.cur, diagrams: s.diagrams, closedGroups: s.closedGroups, sync: s.sync, syncUser: s.syncUser }),
     },
   ),
 );

@@ -20,7 +20,7 @@ Normas de referencia: **RETIE** (símbolos IEC 60617, código de colores) y
 | 6 | Exportar imagen PNG (4×, máx. ~14 MP, fuentes incluidas) e informe PDF (proyecto, diagrama, equipos, revisiones, firmas) | ✅ |
 | 7 | Diagrama de conexiones (8 tipos, bornera asimétrica/simétrica, 4 bloques, respaldo, 27 medidores con lupa, Aron, novedades de cableado en el dibujo y en Revisiones) | ✅ |
 | 8 | Diagrama fasorial (trifásico, bifásico, monofásico y Aron; ángulos en grados o FP; tabla V, I, φ, FP, P, Q; avisos en Revisiones) | ✅ |
-| 9 | Supabase (login, guardado, sincronización) + PWA sin internet | ⏳ |
+| 9 | Supabase (entrar con el correo, solo correos autorizados, sincronización) + guardado en el celular (IndexedDB) + PWA instalable que abre sin internet | ✅ (falta que crees tu proyecto: [docs/SUPABASE.md](docs/SUPABASE.md)) |
 | 10 | Despliegue + importar el frontend en Lovable | ⏳ |
 
 La referencia funcional es la versión anterior en un solo archivo, `UnifilarPro_Medida_Bia.html`.
@@ -32,15 +32,20 @@ backend/    Python 3.12 + FastAPI (fuente oficial del catálogo y las reglas)
   app/catalog.py     catálogo de elementos = FUENTE ÚNICA DE VERDAD
   app/models.py      Diagram, Element, Project
   app/rules/         tipo de medida, fusible sugerido, revisiones, resúmenes
-  app/storage/       guardado (SQLite local; Supabase en la fase 9)
+  app/storage/       guardado del backend (SQLite)
+  app/auth.py        verifica la sesión de Supabase
   app/main.py        endpoints REST
 frontend/   React + TypeScript + Vite + Tailwind (esto es lo que se importa en Lovable)
   src/catalog/       catalog.json (generado, no editar a mano)
   src/checks/        copia TS de las reglas, para trabajar sin internet
   src/diagram/       motor de dibujo SVG del unifilar (symbols.ts + engine.ts)
-  src/store/         estado (Zustand)
+  src/store/         estado (Zustand) guardado en el celular (IndexedDB)
+  src/sync/          sincronización con Supabase (funciona sin internet)
+  src/export/        imagen PNG e informe PDF
   src/components/    botones por grupo, lista, formularios, revisiones
 shared/test-cases/  casos JSON que deben dar igual en Python y en TypeScript
+supabase/migrations/  tabla y permisos (RLS) de la nube
+docs/SUPABASE.md    guía paso a paso para conectar la nube
 scripts/export_catalog.py   genera frontend/src/catalog/catalog.json
 ```
 
@@ -115,5 +120,9 @@ GitHub Actions corre todas las pruebas y el build en cada push (`.github/workflo
 ## Claves y seguridad
 
 Las claves van en un archivo `.env` (copia `.env.example`). El `.env` **nunca** se sube a GitHub.
-El inicio de sesión (solo Jorge, con su correo) y la opción de dar acceso a otras personas
-llegan en la fase 9 con Supabase; aquí se explicará paso a paso cómo invitar a alguien.
+Se entra con el correo (código o enlace, sin contraseña). Solo pueden entrar los correos de la
+tabla `allowed_users`, y cada persona ve solo sus diagramas (Row Level Security). Cómo crear el
+proyecto, poner las claves y dar acceso a otra persona: **[docs/SUPABASE.md](docs/SUPABASE.md)**.
+
+El backend solo acepta el token de sesión de Supabase. Para trabajar en el PC sin Supabase
+existe `UNIFILAR_DEV=1` (acepta la cabecera `X-User`); nunca se usa en el servidor publicado.

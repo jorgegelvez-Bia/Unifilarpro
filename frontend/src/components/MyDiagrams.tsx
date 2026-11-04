@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { dTitle, useStore, type TemplateKind } from '@/store/diagram';
+import { CloudPanel } from './CloudPanel';
 
 const TEMPLATES: [TemplateKind, string][] = [
   ['vacio', 'Vacío'],
@@ -27,6 +28,7 @@ export function MyDiagrams({ onClose }: { onClose: () => void }) {
         <div className="lbl">Mis diagramas</div>
         <button className="btn" onClick={onClose}>Cerrar</button>
       </div>
+      <CloudPanel />
       <div className="flex flex-wrap gap-1.5">
         <span className="self-center text-xs text-muted">Nuevo:</span>
         {TEMPLATES.map(([k, l]) => (

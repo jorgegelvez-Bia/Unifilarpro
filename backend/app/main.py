@@ -10,9 +10,10 @@ import os
 import time
 from typing import Any
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Response
+from fastapi import Depends, FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.auth import current_user
 from app.catalog import catalog_json
 from app.models import CheckItem, Diagram, DiagramIn, FuseResult
 from app.rules import checks, fill_defaults, fuse_for, meter_type
@@ -35,12 +36,6 @@ def store() -> SQLiteStore:
     if _store is None:
         _store = SQLiteStore()
     return _store
-
-
-def current_user(x_user: str | None = Header(default=None)) -> str:
-    """Usuario actual. En la fase 9 sale del token de Supabase Auth.
-    Mientras tanto se usa la cabecera X-User (o 'local')."""
-    return x_user or "local"
 
 
 def _diag(d: DiagramIn) -> dict[str, Any]:

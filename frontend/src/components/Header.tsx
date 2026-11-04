@@ -1,3 +1,4 @@
+import { CloudChip } from '@/components/CloudPanel';
 import { ExportButtons } from '@/components/ExportButtons';
 
 export function Header({ onToggleList }: { onToggleList: () => void }) {
@@ -11,7 +12,8 @@ export function Header({ onToggleList }: { onToggleList: () => void }) {
           <small className="block text-[13px] font-normal text-muted">Diagrama unifilar del sistema de medida</small>
         </span>
       </h1>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <CloudChip />
         <button className="btn" onClick={onToggleList}>
           Mis diagramas
         </button>
