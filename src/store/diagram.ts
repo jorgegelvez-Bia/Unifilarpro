@@ -5,7 +5,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CATALOG, TYPES, fieldsOf } from '@/catalog';
-import { applyAutoFuse, brName, fillDefaults, mainBk, multiT, multiTr, trN, grpOf, wrDefault } from '@/checks';
+import { applyAutoFuse, brName, fillDefaults, mainBk, multiT, multiTr, trN, grpOf, wrDefault, fsDefault, FS_SEQ, FS_MODO } from '@/checks';
 import type { Diagram, Element } from '@/types';
 
 export const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -184,6 +184,7 @@ export const useStore = create<State>()(
           if (t === 'gabinete') el.f._gm = 1;
           if (t === 'acom') el.f._pfv = 1;
           if (t === 'conex') { el.f.tipo = wrDefault(cur); el.f.bornes = 'Asimétrico'; el.f.nov = []; }
+          if (t === 'fasor') { el.f.sis = fsDefault(cur); el.f.seq = FS_SEQ[0]; el.f.modo = FS_MODO[0]; }
           if (t === 'transc') {
             const db = [...cur.els].reverse().find((x) => x.t === 'doble');
             if (db) {

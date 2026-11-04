@@ -3,6 +3,7 @@ import { TYPES } from '@/catalog';
 import type { CheckItem, DiagramLike } from '@/types';
 import { NF, brName, fv, jsFloat, jsInt, jsNumber, multiT, numTxt, rama, trN } from './common';
 import { fuseFor } from './fuse';
+import { fsWarn } from './phasor';
 import { summary } from './summary';
 import { wrNovText, wrNovs } from './wiring';
 
@@ -18,7 +19,7 @@ export function checks(d: DiagramLike): CheckItem[] {
   const idx = (t: string) => els.findIndex((e) => e.t === t);
 
   els.filter((e) => e.t === 'irreg').forEach((e, k) => bad(`Irregularidad ${k + 1}: ${summary(e, d)}.`));
-  // TODO fase 8: avisos del fasorial ("Fasorial · …").
+  els.filter((e) => e.t === 'fasor').forEach((c) => fsWarn(c).forEach((w) => bad('Fasorial · ' + w)));
   {
     let k = els.filter((e) => e.t === 'irreg').length;
     els.filter((e) => e.t === 'conex').forEach((c) => wrNovs(c, d).forEach((n) => bad(`Irregularidad ${++k} (cableado): ${wrNovText(n)}.`)));
